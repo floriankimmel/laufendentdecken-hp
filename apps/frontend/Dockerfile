@@ -10,13 +10,12 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 # Copy frontend app
 COPY apps/frontend ./apps/frontend
 RUN pnpm install --frozen-lockfile --filter frontend
-WORKDIR /app/apps/frontend
 # Astro DB with libSQL (Turso) for --remote build
 ARG ASTRO_DB_REMOTE_URL
 ARG ASTRO_DB_APP_TOKEN
 ENV ASTRO_DB_REMOTE_URL=$ASTRO_DB_REMOTE_URL
 ENV ASTRO_DB_APP_TOKEN=$ASTRO_DB_APP_TOKEN
-RUN pnpm build
+RUN pnpm --filter frontend build
 
 FROM base
 WORKDIR /app
@@ -25,12 +24,12 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 # Copy frontend app package.json
 COPY apps/frontend/package.json ./apps/frontend/package.json
 RUN pnpm install --prod --frozen-lockfile --filter frontend
-WORKDIR /app/apps/frontend
-COPY --from=build /app/apps/frontend/dist ./dist
+COPY --from=build /app/apps/frontend/dist ./apps/frontend/dist
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=8080
+WORKDIR /app/apps/frontend
 EXPOSE 8080
 
 CMD ["node", "./dist/server/entry.mjs"]
