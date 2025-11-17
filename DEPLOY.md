@@ -65,17 +65,19 @@ Add secrets to GitHub repo (Settings > Secrets and variables > Actions):
 
 ## Manual Deployment
 
+Run from monorepo root:
+
 ### Backend
 ```bash
-cd apps/backend
-flyctl deploy
+flyctl deploy --config apps/backend/fly.toml --dockerfile apps/backend/Dockerfile
 ```
 
 ### Frontend
 ```bash
-cd apps/frontend
 # Pass Turso credentials as build args
 flyctl deploy \
+  --config apps/frontend/fly.toml \
+  --dockerfile apps/frontend/Dockerfile \
   --build-arg ASTRO_DB_REMOTE_URL="$(turso db show laufendentdecken --url)" \
   --build-arg ASTRO_DB_APP_TOKEN="your-turso-token"
 ```

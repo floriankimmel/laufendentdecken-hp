@@ -5,20 +5,26 @@ RUN corepack enable
 
 FROM base AS build
 WORKDIR /app
-COPY package.json pnpm-lock.yaml* ./
-COPY prisma ./prisma
-RUN pnpm install --frozen-lockfile
-COPY . .
+# Copy monorepo root files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy backend app
+COPY apps/backend ./apps/backend
+RUN pnpm install --frozen-lockfile --filter backend
+WORKDIR /app/apps/backend
 RUN pnpm db:generate
 RUN pnpm build
 
 FROM base
 WORKDIR /app
-COPY package.json pnpm-lock.yaml* ./
-COPY prisma ./prisma
-RUN pnpm install --prod --frozen-lockfile
+# Copy monorepo root files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy backend app
+COPY apps/backend/package.json ./apps/backend/package.json
+COPY apps/backend/prisma ./apps/backend/prisma
+RUN pnpm install --prod --frozen-lockfile --filter backend
+WORKDIR /app/apps/backend
 RUN pnpm db:generate
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/apps/backend/dist ./dist
 
 ENV NODE_ENV=production
 EXPOSE 8080

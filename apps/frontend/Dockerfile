@@ -5,9 +5,12 @@ RUN corepack enable
 
 FROM base AS build
 WORKDIR /app
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
-COPY . .
+# Copy monorepo root files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy frontend app
+COPY apps/frontend ./apps/frontend
+RUN pnpm install --frozen-lockfile --filter frontend
+WORKDIR /app/apps/frontend
 # Astro DB with libSQL (Turso) for --remote build
 ARG ASTRO_DB_REMOTE_URL
 ARG ASTRO_DB_APP_TOKEN
@@ -17,9 +20,13 @@ RUN pnpm build
 
 FROM base
 WORKDIR /app
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --prod --frozen-lockfile
-COPY --from=build /app/dist ./dist
+# Copy monorepo root files
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+# Copy frontend app package.json
+COPY apps/frontend/package.json ./apps/frontend/package.json
+RUN pnpm install --prod --frozen-lockfile --filter frontend
+WORKDIR /app/apps/frontend
+COPY --from=build /app/apps/frontend/dist ./dist
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
