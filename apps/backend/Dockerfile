@@ -12,6 +12,8 @@ COPY apps/backend ./apps/backend
 RUN pnpm install --frozen-lockfile --filter backend
 # Run commands from backend directory
 WORKDIR /app/apps/backend
+# Provide dummy DATABASE_URL for prisma generate (doesn't connect, just generates client)
+ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
 RUN pnpm db:generate
 RUN pnpm build
 
