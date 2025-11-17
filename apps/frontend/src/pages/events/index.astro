@@ -3,9 +3,10 @@ export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
 import { getTrailEvents } from '../../lib/api/client';
+import type { TrailEvent, TrailEventDistance } from '../../lib/api/types';
 
-let trailEvents = [];
-let error = null;
+let trailEvents: TrailEvent[] = [];
+let error: string | null = null;
 
 try {
   trailEvents = await getTrailEvents();
@@ -99,7 +100,7 @@ try {
             </div>
             {event.distances.length > 0 && (
               <div class="mt-4 flex flex-wrap gap-2">
-                {event.distances.map((distance) => (
+                {event.distances.map((distance: TrailEventDistance) => (
                   <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                     {distance.distance}km
                   </span>

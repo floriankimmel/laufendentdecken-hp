@@ -23,9 +23,9 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/backend/package.json ./apps/backend/package.json
 COPY apps/backend/prisma ./apps/backend/prisma
 RUN pnpm install --prod --frozen-lockfile --filter backend
-# Run commands from backend directory
 WORKDIR /app/apps/backend
-RUN pnpm db:generate
+# Copy generated Prisma Client from build stage
+COPY --from=build /app/apps/backend/src/generated ./src/generated
 COPY --from=build /app/apps/backend/dist ./dist
 
 ENV NODE_ENV=production

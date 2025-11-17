@@ -3,9 +3,10 @@ export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
 import { getReviews } from '../../lib/api/client';
+import type { Review } from '../../lib/api/types';
 
-let reviews = [];
-let error = null;
+let reviews: Review[] = [];
+let error: string | null = null;
 
 try {
   reviews = await getReviews();
