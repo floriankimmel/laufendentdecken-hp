@@ -3,29 +3,13 @@ import db from '@astrojs/db';
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
+import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel({
-    imageService: true,
-    imagesConfig: {
-      formats: ['image/avif'],
-      minimumCacheTTL: 3600,
-      remotePatterns: [
-        {
-          protocol: 'https'
-        },
-        {
-          protocol: 'http'
-        }
-      ],
-      sizes: [160, 320, 640, 1280]
-    },
-    webAnalytics: {
-      enabled: true
-    }
+  adapter: node({
+    mode: 'standalone'
   }),
   build: {
     inlineStylesheets: 'always'

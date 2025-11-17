@@ -17,6 +17,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.1",
     "@astrojs/preact": "^4.1.1",
     "@astrojs/vercel": "^8.2.11",
     "@preact/signals": "^2.3.2",
