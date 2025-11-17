@@ -17,7 +17,7 @@ jobs:
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy backend to Fly.io
-        run: flyctl deploy --remote-only --config apps/backend/fly.toml
+        run: flyctl deploy --remote-only
         working-directory: apps/backend
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
 
       - name: Deploy frontend to Fly.io
         run: |
-          flyctl deploy --remote-only --config apps/frontend/fly.toml \
+          flyctl deploy --remote-only \
             --build-arg ASTRO_DB_REMOTE_URL=${{ secrets.ASTRO_DB_REMOTE_URL }} \
             --build-arg ASTRO_DB_APP_TOKEN=${{ secrets.ASTRO_DB_APP_TOKEN }}
         working-directory: apps/frontend
