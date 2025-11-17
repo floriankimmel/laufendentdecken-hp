@@ -1,0 +1,148 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import { getReview } from '../../lib/api/client';
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect('/gear');
+}
+
+let review = null;
+let error = null;
+
+try {
+  review = await getReview(id);
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to fetch review';
+  console.error('Error fetching review:', e);
+}
+
+if (!review) {
+  return Astro.redirect('/gear');
+}
+---
+
+<Layout title={`${review.productName} Review`}>
+  <div class="relative z-10 px-8 lg:px-18">
+    <div class="mb-6">
+      <h1
+        class="text-light-text-heading mb-2 text-3xl font-bold lg:text-5xl dark:text-white"
+      >
+        {review.productName}
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400">
+        {review.brand}
+      </p>
+    </div>
+
+    {review.pictureLinks.length > 0 && (
+      <div class="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {review.pictureLinks.map((pic) => (
+          <img
+            src={pic.link}
+            alt={pic.altText}
+            class="h-64 w-full rounded-lg object-cover"
+          />
+        ))}
+      </div>
+    )}
+
+    <div class="mb-8 grid gap-6 md:grid-cols-2">
+      <div class="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
+        <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
+          Details
+        </h2>
+        <dl class="space-y-3">
+          <div>
+            <dt class="text-sm text-gray-500 dark:text-gray-400">Gewicht</dt>
+            <dd class="text-lg font-semibold">{review.weight}g</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-gray-500 dark:text-gray-400">Preis</dt>
+            <dd class="text-lg font-semibold">€{review.price.toFixed(2)}</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-gray-500 dark:text-gray-400">Rating</dt>
+            <dd class="text-lg text-yellow-500">
+              {"★".repeat(Math.floor(review.rating))}
+              {review.rating % 1 !== 0 && "☆"}
+              {" "}
+              {review.rating}/5
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      {review.shoe && (
+        <div class="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
+          <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
+            Schuh Details
+          </h2>
+          <dl class="space-y-3">
+            <div>
+              <dt class="text-sm text-gray-500 dark:text-gray-400">Drop</dt>
+              <dd class="text-lg font-semibold">{review.shoe.drop}mm</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-gray-500 dark:text-gray-400">Grip</dt>
+              <dd class="text-lg font-semibold">{review.shoe.grip}</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-gray-500 dark:text-gray-400">Sohle</dt>
+              <dd class="text-lg font-semibold">{review.shoe.sole}</dd>
+            </div>
+          </dl>
+        </div>
+      )}
+    </div>
+
+    <div class="mb-8 rounded-lg border border-gray-200 p-6 dark:border-gray-700">
+      <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
+        Review
+      </h2>
+      <p class="text-lg leading-relaxed">{review.statement}</p>
+    </div>
+
+    {review.productLinks.length > 0 && (
+      <div class="mb-8">
+        <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
+          Kaufen
+        </h2>
+        <div class="flex flex-wrap gap-4">
+          {review.productLinks.map((link) => (
+            <a
+              href={link.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+            >
+              {link.altText}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {review.podcastEpisode && (
+      <div class="mb-8">
+        <a
+          href={review.podcastEpisode}
+          class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+            <path
+              fill-rule="evenodd"
+              d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Zur Podcast Episode
+        </a>
+      </div>
+    )}
+  </div>
+</Layout>

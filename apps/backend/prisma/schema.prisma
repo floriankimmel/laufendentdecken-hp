@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Review {
+  id             String   @id @default(uuid())
+  productName    String
+  brand          String
+  weight         Float
+  price          Float
+  podcastEpisode String
+  rating         Float
+  statement      String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  shoe           ReviewShoe?
+  productLinks   ProductLink[]
+  pictureLinks   ReviewPicture[]
+
+  @@map("reviews")
+}
+
+model ReviewShoe {
+  id       String  @id @default(uuid())
+  reviewId String  @unique
+  drop     Float
+  grip     String
+  sole     String
+
+  review   Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@map("review_shoes")
+}
+
+model ProductLink {
+  id       String  @id @default(uuid())
+  reviewId String
+  link     String
+  altText  String
+
+  review   Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@map("product_links")
+}
+
+model ReviewPicture {
+  id       String  @id @default(uuid())
+  reviewId String
+  link     String
+  altText  String
+
+  review   Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@map("review_pictures")
+}
+
+model TrailEvent {
+  id             String   @id @default(uuid())
+  name           String
+  date           String
+  location       String
+  podcastEpisode String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  distances      TrailEventDistance[]
+
+  @@map("trail_events")
+}
+
+model TrailEventDistance {
+  id           String  @id @default(uuid())
+  trailEventId String
+  distance     Float
+  gpxLink      String
+
+  trailEvent   TrailEvent @relation(fields: [trailEventId], references: [id], onDelete: Cascade)
+
+  @@map("trail_event_distances")
+}

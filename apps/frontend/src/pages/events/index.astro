@@ -1,0 +1,114 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import { getTrailEvents } from '../../lib/api/client';
+
+let trailEvents = [];
+let error = null;
+
+try {
+  trailEvents = await getTrailEvents();
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to fetch trail events';
+  console.error('Error fetching trail events:', e);
+}
+---
+
+<Layout title="Trail Events">
+  <div class="relative z-10 px-8 lg:px-18">
+    <h1
+      class="text-light-text-heading mb-4 text-2xl font-bold lg:mb-6 lg:text-5xl dark:text-white"
+    >
+      Trail Events
+    </h1>
+
+    <p class="mb-8">
+      Entdecke spannende Trail Running Events und Wettkämpfe.
+    </p>
+
+    {error && (
+      <div class="mb-6 rounded-lg bg-red-100 p-4 text-red-800 dark:bg-red-900 dark:text-red-200">
+        <p>Fehler beim Laden der Events: {error}</p>
+      </div>
+    )}
+
+    {trailEvents.length === 0 && !error && (
+      <p class="text-gray-600 dark:text-gray-400">
+        Keine Events verfügbar.
+      </p>
+    )}
+
+    {trailEvents.length > 0 && (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {trailEvents.map((event) => (
+          <a
+            href={`/events/${event.id}`}
+            class="block rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg dark:border-gray-700"
+          >
+            <div class="mb-3">
+              <h2 class="text-light-text-heading text-xl font-bold dark:text-white">
+                {event.name}
+              </h2>
+              <div class="mt-2 flex flex-col gap-1 text-sm text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2">
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span>
+                    {new Date(event.date).toLocaleDateString('de-AT', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span>{event.location}</span>
+                </div>
+              </div>
+            </div>
+            {event.distances.length > 0 && (
+              <div class="mt-4 flex flex-wrap gap-2">
+                {event.distances.map((distance) => (
+                  <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                    {distance.distance}km
+                  </span>
+                ))}
+              </div>
+            )}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>

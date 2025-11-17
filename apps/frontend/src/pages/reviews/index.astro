@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const reviews = await getCollection('reviews');
+const sortedReviews = reviews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Reviews">
+  <div class="relative z-10 px-8 lg:px-18">
+    <h1
+      class="text-light-text-heading mb-4 text-2xl font-bold lg:mb-6 lg:text-5xl dark:text-white"
+    >
+      Reviews
+    </h1>
+
+    <p class="mb-8">
+      Hier findest du Reviews zu Laufschuhen, Equipment und mehr.
+    </p>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        sortedReviews.map((review) => (
+          <a
+            href={`/reviews/${review.slug}`}
+            class="block rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg dark:border-gray-700"
+          >
+            <div class="mb-3">
+              <h2 class="text-light-text-heading text-xl font-bold dark:text-white">
+                {review.data.title}
+              </h2>
+              <div class="mt-2 flex items-center gap-2">
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                  {review.data.category}
+                </span>
+                <span class="text-sm text-gray-400">•</span>
+                <span class="text-sm text-yellow-500">
+                  {"★".repeat(Math.floor(review.data.rating))}
+                  {review.data.rating % 1 !== 0 && "☆"}
+                  {" "}
+                  {review.data.rating}/5
+                </span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              {review.data.excerpt}
+            </p>
+            <time class="mt-4 block text-xs text-gray-400">
+              {review.data.date.toLocaleDateString('de-AT', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

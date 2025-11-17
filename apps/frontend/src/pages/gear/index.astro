@@ -1,0 +1,85 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import { getReviews } from '../../lib/api/client';
+
+let reviews = [];
+let error = null;
+
+try {
+  reviews = await getReviews();
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Failed to fetch reviews';
+  console.error('Error fetching reviews:', e);
+}
+---
+
+<Layout title="Gear Reviews">
+  <div class="relative z-10 px-8 lg:px-18">
+    <h1
+      class="text-light-text-heading mb-4 text-2xl font-bold lg:mb-6 lg:text-5xl dark:text-white"
+    >
+      Gear Reviews
+    </h1>
+
+    <p class="mb-8">
+      Hier findest du Reviews zu Laufschuhen, Equipment und mehr.
+    </p>
+
+    {error && (
+      <div class="mb-6 rounded-lg bg-red-100 p-4 text-red-800 dark:bg-red-900 dark:text-red-200">
+        <p>Fehler beim Laden der Reviews: {error}</p>
+      </div>
+    )}
+
+    {reviews.length === 0 && !error && (
+      <p class="text-gray-600 dark:text-gray-400">
+        Keine Reviews verfügbar.
+      </p>
+    )}
+
+    {reviews.length > 0 && (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {reviews.map((review) => (
+          <a
+            href={`/gear/${review.id}`}
+            class="block rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg dark:border-gray-700"
+          >
+            {review.pictureLinks[0] && (
+              <img
+                src={review.pictureLinks[0].link}
+                alt={review.pictureLinks[0].altText}
+                class="mb-4 h-48 w-full rounded object-cover"
+              />
+            )}
+            <div class="mb-3">
+              <h2 class="text-light-text-heading text-xl font-bold dark:text-white">
+                {review.productName}
+              </h2>
+              <div class="mt-2 flex items-center gap-2">
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                  {review.brand}
+                </span>
+                <span class="text-sm text-gray-400">•</span>
+                <span class="text-sm text-yellow-500">
+                  {"★".repeat(Math.floor(review.rating))}
+                  {review.rating % 1 !== 0 && "☆"}
+                  {" "}
+                  {review.rating}/5
+                </span>
+              </div>
+            </div>
+            <p class="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
+              {review.statement}
+            </p>
+            <div class="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>{review.weight}g</span>
+              <span>€{review.price.toFixed(2)}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>
