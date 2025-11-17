@@ -26,9 +26,9 @@ COPY apps/backend/package.json ./apps/backend/package.json
 COPY apps/backend/prisma ./apps/backend/prisma
 RUN pnpm install --prod --frozen-lockfile --filter backend
 WORKDIR /app/apps/backend
-# Copy generated Prisma Client from build stage
-COPY --from=build /app/apps/backend/src/generated ./src/generated
+# Copy dist and generated Prisma Client from build stage
 COPY --from=build /app/apps/backend/dist ./dist
+COPY --from=build /app/apps/backend/src/generated ./dist/generated
 
 ENV NODE_ENV=production
 EXPOSE 8080
