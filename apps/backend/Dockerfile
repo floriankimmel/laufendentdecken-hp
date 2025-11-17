@@ -10,8 +10,10 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 # Copy backend app
 COPY apps/backend ./apps/backend
 RUN pnpm install --frozen-lockfile --filter backend
-RUN pnpm --filter backend db:generate
-RUN pnpm --filter backend build
+# Run commands from backend directory
+WORKDIR /app/apps/backend
+RUN pnpm db:generate
+RUN pnpm build
 
 FROM base
 WORKDIR /app
@@ -21,11 +23,12 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/backend/package.json ./apps/backend/package.json
 COPY apps/backend/prisma ./apps/backend/prisma
 RUN pnpm install --prod --frozen-lockfile --filter backend
-RUN pnpm --filter backend db:generate
-COPY --from=build /app/apps/backend/dist ./apps/backend/dist
+# Run commands from backend directory
+WORKDIR /app/apps/backend
+RUN pnpm db:generate
+COPY --from=build /app/apps/backend/dist ./dist
 
 ENV NODE_ENV=production
-WORKDIR /app/apps/backend
 EXPOSE 8080
 
 CMD ["pnpm", "start"]
