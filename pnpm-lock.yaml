@@ -50,6 +50,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@astrojs/db':
+        specifier: ^0.18.1
+        version: 0.18.2(@prisma/client@6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3))(prisma@6.19.0(typescript@5.9.3))
       '@astrojs/node':
         specifier: ^9.5.1
         version: 9.5.1(astro@5.15.8(@types/node@24.10.1)(@vercel/functions@2.2.13)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))
@@ -77,6 +80,9 @@ importers:
       atropos:
         specifier: ^2.0.2
         version: 2.0.2
+      html-to-text:
+        specifier: ^9.0.5
+        version: 9.0.5
       preact:
         specifier: ^10.27.2
         version: 10.27.2
@@ -93,9 +99,6 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.5
         version: 0.9.5(prettier-plugin-astro@0.14.1)(prettier@3.6.2)(typescript@5.9.3)
-      '@astrojs/db':
-        specifier: ^0.18.1
-        version: 0.18.2(@prisma/client@6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3))(prisma@6.19.0(typescript@5.9.3))
       '@astrojs/sitemap':
         specifier: ^3.6.0
         version: 3.6.0
@@ -141,9 +144,6 @@ importers:
       globals:
         specifier: ^16.4.0
         version: 16.5.0
-      html-to-text:
-        specifier: ^9.0.5
-        version: 9.0.5
       jsdom:
         specifier: ^27.0.1
         version: 27.2.0
