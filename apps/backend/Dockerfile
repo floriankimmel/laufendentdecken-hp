@@ -33,4 +33,4 @@ COPY --from=build /app/apps/backend/src/generated ./dist/generated
 ENV NODE_ENV=production
 EXPOSE 8080
 
-CMD ["pnpm", "start"]
+CMD ["sh", "-c", "pnpm db:push --accept-data-loss && pnpm start"]
