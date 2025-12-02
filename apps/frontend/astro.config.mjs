@@ -37,7 +37,8 @@ export default defineConfig({
       {
         protocol: 'http'
       }
-    ]
+    ],
+    failOnError: false
   },
   prefetch: {
     prefetchAll: true,
