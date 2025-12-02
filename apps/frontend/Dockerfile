@@ -35,6 +35,9 @@ COPY --from=build /app/apps/frontend/dist ./dist
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=8080
+# Set PUBLIC_API_URL for runtime SSR
+ARG PUBLIC_API_URL
+ENV PUBLIC_API_URL=$PUBLIC_API_URL
 EXPOSE 8080
 
 CMD ["node", "./dist/server/entry.mjs"]
