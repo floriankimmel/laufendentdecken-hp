@@ -38,7 +38,7 @@ export default defineConfig({
         protocol: 'http'
       }
     ],
-    failOnError: false
+    service: { entrypoint: 'astro/assets/services/noop' }
   },
   prefetch: {
     prefetchAll: true,
