@@ -45,6 +45,10 @@ export async function getStaticPaths() {
 
 const { episode } = Astro.props;
 
+if (!episode) {
+  return Astro.redirect('/404');
+}
+
 let Transcript;
 
 if (episode.episodeNumber && episode.episodeNumber !== 'Bonus') {

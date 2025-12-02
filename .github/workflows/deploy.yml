@@ -37,6 +37,7 @@ jobs:
             --config apps/frontend/fly.toml \
             --dockerfile apps/frontend/Dockerfile \
             --build-arg ASTRO_DB_REMOTE_URL=${{ secrets.ASTRO_DB_REMOTE_URL }} \
-            --build-arg ASTRO_DB_APP_TOKEN=${{ secrets.ASTRO_DB_APP_TOKEN }}
+            --build-arg ASTRO_DB_APP_TOKEN=${{ secrets.ASTRO_DB_APP_TOKEN }} \
+            --build-arg PUBLIC_API_URL=${{ secrets.PUBLIC_API_URL }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
