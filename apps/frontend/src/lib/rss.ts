@@ -54,10 +54,11 @@ export async function getShowInfo() {
 
   // @ts-expect-error
   const showInfo = (await parseFeed.parse(starpodConfig.rssFeed)) as Show;
-  showInfo.image = (await optimizeImage(showInfo.image, {
-    height: 640,
-    width: 640
-  })) as string;
+  // Skip image optimization to prevent build failures
+  // showInfo.image = (await optimizeImage(showInfo.image, {
+  //   height: 640,
+  //   width: 640
+  // })) as string;
 
   showInfoCache = showInfo;
   return showInfo;
@@ -124,7 +125,7 @@ export async function getAllEpisodes() {
             episodeImage: itunes_image?.href,
             episodeNumber,
             episodeSlug,
-            episodeThumbnail: await optimizeImage(itunes_image?.href),
+            episodeThumbnail: itunes_image?.href, // Skip optimization to prevent build failures
             published,
             audio: enclosures.map((enclosure) => ({
               src: enclosure.url,
