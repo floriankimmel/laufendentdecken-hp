@@ -11,6 +11,9 @@ distances:
     gpxUrl: https://example.com/gpx/vienna-half.gpx
   - km: 42.2
     gpxUrl: https://example.com/gpx/vienna-full.gpx
+pictureLinks:
+  - url: https://www.vienna-marathon.com/res/img/ogp/default.jpg
+    alt: Vienna City Marathon
 ---
 
 Trail event in Vienna, Austria.

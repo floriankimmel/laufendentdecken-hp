@@ -11,7 +11,9 @@ drop: 8
 grip: Good
 sole: PWRRUN PB
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://s7d4.scene7.com/is/image/WolverineWorldWide/S21007-243_1?$dw-pdp-primary$
+    alt: Endorphin Speed 5
 ---
 
 Eine ausgefeilte Weiterentwicklung des Straßenracers für ambitionierte

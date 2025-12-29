@@ -1,6 +1,6 @@
 ---
-title: Exodus Ultra 4 - Saucony
-productName: Exodus Ultra 4
+title: Xodus Ultra 4 - Saucony
+productName: Xodus Ultra 4
 brand: Saucony
 weight: 295
 price: 180
@@ -11,7 +11,9 @@ drop: 6
 grip: Excellent
 sole: Vibram Megagrip
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://s7d4.scene7.com/is/image/WolverineWorldWide/S21032-240_1?$dw-pdp-primary$
+    alt: Xodus Ultra 4
 ---
 
 Vielseitiger Allrounder mit 6mm Sprengung und Vibram Megagrip-Sohle – ideal für

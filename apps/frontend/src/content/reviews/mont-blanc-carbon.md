@@ -13,7 +13,9 @@ sole: Vibram Litebase
 productLinks:
   - url: https://www.altrarunning.eu/de/mont-blanc-carbon
     text: Altra Mont Blanc Carbon
-pictureLinks: []
+pictureLinks:
+  - url: https://m.media-amazon.com/images/I/61Ry1gZ3bhL._AC_UL320_.jpg
+    alt: Mont Blanc Carbon
 ---
 
 Carbon-bestückter Ultra-Trail-Schuh mit Zero Drop und breiter Zehenbox. Ideal

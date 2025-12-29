@@ -13,7 +13,9 @@ sole: Custom Salomon
 productLinks:
   - url: https://www.salomon.com/de-at/shop-emea/product/s-lab-pulsar-4.html
     text: Salomon S/LAB Pulsar 4
-pictureLinks: []
+pictureLinks:
+  - url: https://www.bfgcdn.com/1500_1500_90/023-2530-0111/salomon-s-lab-pulsar-4-trail-running-shoes.jpg
+    alt: S/LAB Pulsar 4
 ---
 
 Der Salomon S/LAB Pulsar 4 ist eine gelungene Weiterentwicklung der Serie, die

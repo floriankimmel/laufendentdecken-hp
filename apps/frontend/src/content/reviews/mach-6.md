@@ -11,7 +11,9 @@ drop: 5
 grip: Good
 sole: Hoka Rubber
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://roadrunnersports.widen.net/content/aadaocp1wt
+    alt: Mach 6
 ---
 
 Daily Trainer mit solider Performance für den täglichen Einsatz.

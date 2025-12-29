@@ -17,6 +17,9 @@ distances:
     gpxUrl: https://pitz-alpine.at/90k.gpx
   - km: 105
     gpxUrl: https://pitz-alpine.at/105k.gpx
+pictureLinks:
+  - url: https://www.pitztal.com/media/meta/pitz-alpine-2022.jpg
+    alt: Salomon Pitz Alpine Glacier Trail
 ---
 
 Trail event in Pitztal, Austria.

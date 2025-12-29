@@ -13,7 +13,9 @@ sole: Vibram XS-Trek
 productLinks:
   - url: https://www.dynafit.com/de-at/trail-graphic
     text: Dynafit Trail Graphic
-pictureLinks: []
+pictureLinks:
+  - url: https://www.bfgcdn.com/1500_1500_90/023-1703-0111/dynafit-alpine-dna-2-trail-running-shoes.jpg
+    alt: Trail Graphic
 ---
 
 Der Schuh hat uns optisch überzeugt. Die Passform ist trotz typisch schmaler

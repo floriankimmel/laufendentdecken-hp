@@ -14,7 +14,9 @@ productLinks:
   - url: >-
       https://www.salomon.com/de-at/shop-emea/product/s-lab-ultra-glide-li6991.html
     text: Salomon S/LAB Ultra Glide
-pictureLinks: []
+pictureLinks:
+  - url: https://images.ctfassets.net/7iktyqnb7v9e/NaCUCROLT7JdUHR1DbdLz/7300b544936b592ba95df22734c19460/Hiking-shoes.jpg
+    alt: S/LAB Ultra Glide
 ---
 
 Premium Ultra-Distanz Trail-Schuh mit exzellenter Dämpfung für lange Läufe.

@@ -11,7 +11,9 @@ drop: 8
 grip: Good
 sole: PWRRUN+
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://s7d4.scene7.com/is/image/WolverineWorldWide/S21023-200_1?$dw-pdp-primary$
+    alt: Triumph 23
 ---
 
 Ein hervorragender Daily Trainer für die Straße mit ausgezeichneter Dämpfung und

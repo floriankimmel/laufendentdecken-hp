@@ -9,6 +9,9 @@ distances:
     gpxUrl: https://glockner-mountain-run.at/21k.gpx
   - km: 42
     gpxUrl: https://glockner-mountain-run.at/42k.gpx
+pictureLinks:
+  - url: https://grossglockner-mountainrun.at/wp-content/uploads/2023/07/Grossglockner-Mountain-Run-3932-scaled.jpg
+    alt: Großglockner Mountainrun
 ---
 
 Trail event in Heiligenblut, Austria.

@@ -13,7 +13,9 @@ sole: Vibram Megagrip
 productLinks:
   - url: https://www.dynafit.com/de-at/alpine-pro-2
     text: Dynafit Alpine Pro 2
-pictureLinks: []
+pictureLinks:
+  - url: https://m.media-amazon.com/images/I/71exUGWUS3L._AC_SY695_.jpg
+    alt: Alpine Pro 2
 ---
 
 Überzeugt mit Dämpfung und Komfort auf alpinem, steinigem Gelände durch Rock

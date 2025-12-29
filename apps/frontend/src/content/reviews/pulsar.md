@@ -11,7 +11,9 @@ drop: 6
 grip: Good
 sole: Custom Salomon
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://www.bfgcdn.com/1500_1500_90/023-1079/salomon-pulsar-trail-trail-running-shoes.jpg
+    alt: Pulsar
 ---
 
 Der Salomon Pulsar ist ein solider Allrounder für Wald- und Wiesenwege ohne

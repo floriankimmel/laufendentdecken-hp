@@ -11,6 +11,9 @@ distances:
     gpxUrl: https://example.com/gpx/julian-108k.gpx
   - km: 120
     gpxUrl: https://example.com/gpx/julian-120k.gpx
+pictureLinks:
+  - url: https://res.cloudinary.com/utmb-world/image/upload/q_auto/f_auto/c_fill,g_auto/if_w_gt_1920/c_scale,w_1920/if_end/v1/julianalps/Backgrounds/JATR_25_159_1_6689d21f1d?_a=ATADJAA0
+    alt: Julian Alps Ultra Sky Trail by UTMB
 ---
 
 Trail event in Kranjska Gora, Slovenia.

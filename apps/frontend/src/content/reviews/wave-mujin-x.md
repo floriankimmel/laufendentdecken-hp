@@ -13,7 +13,9 @@ sole: Michelin
 productLinks:
   - url: https://emea.mizuno.com/eu/de-de/wave-mujin-10/J1GJ247051.html
     text: Mizuno Wave Mujin X
-pictureLinks: []
+pictureLinks:
+  - url: https://m.media-amazon.com/images/I/61Hmzr51mCL._AC_UL320_.jpg
+    alt: Wave Mujin X
 ---
 
 Technischer Trail-Schuh mit Mizuno Wave-Technologie für anspruchsvolle

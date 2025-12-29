@@ -13,7 +13,9 @@ sole: Custom Salomon
 productLinks:
   - url: https://www.salomon.com/de-at/shop-emea/product/drx-defy-grvl-li6257.html
     text: Salomon DRX Defy Grvl
-pictureLinks: []
+pictureLinks:
+  - url: https://cdn.dam.salomon.com/8ce78876-8c3a-4bfc-a3f2-b2f40093031b/L47809600/PNG-2000px-max-72dpi.png?pad=0.12,0.12,0.12,0.12
+    alt: DRX Defy Grvl
 ---
 
 Vielseitiger Gravel- und Trail-Schuh mit solider Performance für gemischte

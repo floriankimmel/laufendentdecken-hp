@@ -11,7 +11,9 @@ drop: 7
 grip: Good
 sole: Custom CEP
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://ceprunning.com/cdn/shop/files/Pro-Run-Omnispeed-BowTech-Shoes_Green-Lime_WV21HR-WV31HR_4x5_Transparent_01.png?v=1762440149
+    alt: Omni Speed
 ---
 
 Ein gelungenes Modell mit innovativen Ansätzen für CEPs ersten Laufschuh. Mit

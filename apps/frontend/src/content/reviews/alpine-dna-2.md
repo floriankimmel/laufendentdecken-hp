@@ -13,7 +13,9 @@ sole: Vibram Litebase
 productLinks:
   - url: https://www.dynafit.com/de-de/alpine-dna-2
     text: Dynafit Alpine DNA 2
-pictureLinks: []
+pictureLinks:
+  - url: https://www.bfgcdn.com/1500_1500_90/023-1703-0111/dynafit-alpine-dna-2-trail-running-shoes.jpg
+    alt: Alpine DNA 2
 ---
 
 Für mittlere Distanzen konzipiert, besticht dieser Schuh durch Stabilität dank

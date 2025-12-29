@@ -11,6 +11,9 @@ distances:
     gpxUrl: https://cappadociaultratrail.com/60k.gpx
   - km: 110
     gpxUrl: https://cappadociaultratrail.com/110k.gpx
+pictureLinks:
+  - url: https://cappadociaultratrail.com/Upload/Etkinlikler/CUT.jpg
+    alt: Cappadocia Ultra Trail
 ---
 
 Trail event in Cappadocia, Turkey.

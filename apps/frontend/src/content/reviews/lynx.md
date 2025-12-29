@@ -11,7 +11,9 @@ drop: 5
 grip: Excellent
 sole: Vibram
 productLinks: []
-pictureLinks: []
+pictureLinks:
+  - url: https://www.361usa.com/cdn/shop/files/1_e9b19529-6e40-4f91-a485-c8651420fc84.jpg?v=1725909803&width=1024
+    alt: Lynx
 ---
 
 Der Schuh will nichts spezielles, macht alles mit - im besten Sinne unauffällig.
