@@ -6,7 +6,7 @@ import Layout from '../../layouts/Layout.astro';
 
 const reviews = await getCollection('reviews');
 const sortedReviews = reviews.sort(
-  (a, b) => b.data.date.valueOf() - a.data.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
 
