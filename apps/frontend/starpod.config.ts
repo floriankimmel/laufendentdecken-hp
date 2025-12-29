@@ -26,11 +26,11 @@ export default defineStarpodConfig({
     }
   ],
   platforms: {
-    apple: 'https://podcasts.apple.com/at/podcast/laufend-entdecken-podcast-der-%C3%B6sterreichische-laufpodcast/id1191080260',
+    apple:
+      'https://podcasts.apple.com/at/podcast/laufend-entdecken-podcast-der-%C3%B6sterreichische-laufpodcast/id1191080260',
     appleIdNumber: '1191080260',
     spotify: 'https://open.spotify.com/show/74Qf7mQCKHCWflEK7YpegY',
     youtube: 'https://www.youtube.com/channel/UCwYSWnwytu411Y9vrBO333w/videos'
   },
   rssFeed: 'https://laufendentdecken-podcast.at/feed/mp3/'
 });
-

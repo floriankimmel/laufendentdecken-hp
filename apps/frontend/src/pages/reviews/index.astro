@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 const reviews = await getCollection('reviews');
-const sortedReviews = reviews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sortedReviews = reviews.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
 
 <Layout title="Reviews">
@@ -35,10 +37,8 @@ const sortedReviews = reviews.sort((a, b) => b.data.date.valueOf() - a.data.date
                 </span>
                 <span class="text-sm text-gray-400">•</span>
                 <span class="text-sm text-yellow-500">
-                  {"★".repeat(Math.floor(review.data.rating))}
-                  {review.data.rating % 1 !== 0 && "☆"}
-                  {" "}
-                  {review.data.rating}/5
+                  {'★'.repeat(Math.floor(review.data.rating))}
+                  {review.data.rating % 1 !== 0 && '☆'} {review.data.rating}/5
                 </span>
               </div>
             </div>
@@ -49,7 +49,7 @@ const sortedReviews = reviews.sort((a, b) => b.data.date.valueOf() - a.data.date
               {review.data.date.toLocaleDateString('de-AT', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric',
+                day: 'numeric'
               })}
             </time>
           </a>

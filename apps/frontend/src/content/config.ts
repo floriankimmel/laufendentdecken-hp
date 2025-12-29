@@ -10,8 +10,8 @@ const reviews = defineCollection({
     category: z.string(),
     rating: z.number().min(1).max(5),
     excerpt: z.string(),
-    image: z.string().optional(),
-  }),
+    image: z.string().optional()
+  })
 });
 
 export const collections = {

@@ -12,7 +12,7 @@ function parseDuration(duration: string | number | undefined): number {
   if (typeof duration === 'number') return duration;
 
   // Parse HH:MM:SS or MM:SS format
-  const parts = duration.split(':').map(p => parseInt(p, 10));
+  const parts = duration.split(':').map((p) => parseInt(p, 10));
   if (parts.length === 3) {
     return parts[0] * 3600 + parts[1] * 60 + parts[2];
   } else if (parts.length === 2) {

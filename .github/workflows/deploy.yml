@@ -1,16 +1,47 @@
-name: Deploy to Fly.io
+name: CI/CD
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run check
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run build
+
   deploy-backend:
     name: Deploy Backend
     runs-on: ubuntu-latest
     environment: production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [check, build]
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +56,8 @@ jobs:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     environment: production
-    needs: deploy-backend
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [check, build, deploy-backend]
     steps:
       - uses: actions/checkout@v4
 

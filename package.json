@@ -11,7 +11,13 @@
     "build:frontend": "pnpm --filter frontend build",
     "build:backend": "pnpm --filter backend build",
     "lint": "pnpm --filter \"./apps/*\" lint",
-    "test": "pnpm --filter \"./apps/*\" test"
+    "test": "pnpm --filter \"./apps/*\" test",
+    "check": "pnpm check:lint && pnpm check:prettier",
+    "check:lint": "pnpm --filter \"./apps/*\" lint",
+    "check:prettier": "pnpm --filter frontend exec prettier --check .",
+    "fix": "pnpm fix:lint && pnpm fix:prettier",
+    "fix:lint": "pnpm --filter frontend lint:fix",
+    "fix:prettier": "pnpm --filter frontend exec prettier -w ."
   },
   "engines": {
     "node": "^22.0.0"

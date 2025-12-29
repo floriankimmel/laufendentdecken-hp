@@ -69,11 +69,11 @@
       ship-particles-x 1s ease infinite,
       ship-particles-y 1s ease infinite;
     animation-composition: add;
-    background-color: #B0ECFF;
+    background-color: #b0ecff;
     opacity: 0;
 
     @media (prefers-color-scheme: light) {
-      background-color: #906BFF;
+      background-color: #906bff;
     }
 
     &:nth-child(1) {
@@ -111,12 +111,14 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(var(--x-offset)) scale(.25) translateY(var(--y-offset));
+    transform: translateX(var(--x-offset)) scale(0.25)
+      translateY(var(--y-offset));
   }
 }
 
 @keyframes ship-particles-y {
-  0%, 15% {
+  0%,
+  15% {
     transform: translateY(0);
   }
   100% {

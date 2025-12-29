@@ -1,6 +1,12 @@
 import type { Review, TrailEvent } from './types';
 
-const API_BASE_URL = process.env.PUBLIC_API_URL || import.meta.env.PUBLIC_API_URL || 'http://localhost:3001/api';
+// Access runtime env var in a way Vite can't statically replace
+const getEnv = (key: string) =>
+  typeof process !== 'undefined' && process.env ? process.env[key] : undefined;
+const API_BASE_URL =
+  getEnv('PUBLIC_API_URL') ||
+  import.meta.env.PUBLIC_API_URL ||
+  'http://localhost:3001/api';
 
 async function fetchAPI<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`);

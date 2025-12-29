@@ -74,7 +74,7 @@ export default function Player() {
   return (
     <div class="player fixed inset-x-0 bottom-0 z-50 lg:left-112 xl:left-120">
       <div
-        class="flex items-center gap-6 bg-light-player/90 px-4 py-4 backdrop-blur-xs md:px-6 dark:bg-dark-player/90"
+        class="bg-light-player/90 dark:bg-dark-player/90 flex items-center gap-6 px-4 py-4 backdrop-blur-xs md:px-6"
         role="region"
         style={{ viewTransitionName: 'player' }}
       >
@@ -85,7 +85,7 @@ export default function Player() {
         <div class="flex flex-1 flex-col gap-3 overflow-hidden p-1">
           <a
             href={`/${episodeNumber}`}
-            class="truncate text-center text-sm font-bold leading-6 md:text-left"
+            class="truncate text-center text-sm leading-6 font-bold md:text-left"
             title={title}
           >
             {title}

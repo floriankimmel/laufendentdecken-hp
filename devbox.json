@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": ["nodejs@22", "git", "gh"],
+  "shell": {
+    "init_hook": ["[ -f .env ] && export $(grep -v '^#' .env | xargs) || true"],
+    "scripts": {
+      "dev": ["pnpm dev"],
+      "build": ["pnpm build"],
+      "check": ["pnpm check"],
+      "fix": ["pnpm fix"],
+      "install": ["pnpm install"]
+    }
+  }
+}
