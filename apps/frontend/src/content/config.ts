@@ -52,6 +52,14 @@ const races = defineCollection({
           gpxUrl: z.string().url()
         })
       )
+      .default([]),
+    pictureLinks: z
+      .array(
+        z.object({
+          url: z.string().url(),
+          alt: z.string()
+        })
+      )
       .default([])
   })
 });

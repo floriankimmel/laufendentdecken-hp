@@ -26,6 +26,13 @@ const sortedRaces = races.sort(
             href={`/races/${race.slug}`}
             class="block rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg dark:border-gray-700"
           >
+            {race.data.pictureLinks[0] && (
+              <img
+                src={race.data.pictureLinks[0].url}
+                alt={race.data.pictureLinks[0].alt}
+                class="mb-4 h-48 w-full rounded object-cover"
+              />
+            )}
             <div class="mb-3">
               <h2 class="text-light-text-heading text-xl font-bold dark:text-white">
                 {race.data.name}
