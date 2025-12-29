@@ -1,48 +1,41 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { getReview } from '../../lib/api/client';
 
-const { id } = Astro.params;
-
-if (!id) {
-  return Astro.redirect('/gear');
+export async function getStaticPaths() {
+  const reviews = await getCollection('reviews');
+  return reviews.map((review) => ({
+    params: { slug: review.slug },
+    props: { review }
+  }));
 }
 
-let review = null;
-
-try {
-  review = await getReview(id);
-} catch (e) {
-  console.error('Error fetching review:', e);
-}
-
-if (!review) {
-  return Astro.redirect('/gear');
-}
+const { review } = Astro.props;
+const { Content } = await review.render();
 ---
 
-<Layout title={`${review.productName} Review`}>
+<Layout title={`${review.data.productName} Review`}>
   <div class="relative z-10 px-8 lg:px-18">
     <div class="mb-6">
       <h1
         class="text-light-text-heading mb-2 text-3xl font-bold lg:text-5xl dark:text-white"
       >
-        {review.productName}
+        {review.data.productName}
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400">
-        {review.brand}
+        {review.data.brand}
       </p>
     </div>
 
     {
-      review.pictureLinks.length > 0 && (
+      review.data.pictureLinks.length > 0 && (
         <div class="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {review.pictureLinks.map((pic) => (
+          {review.data.pictureLinks.map((pic) => (
             <img
-              src={pic.link}
-              alt={pic.altText}
+              src={pic.url}
+              alt={pic.alt}
               class="h-64 w-full rounded-lg object-cover"
             />
           ))}
@@ -60,43 +53,52 @@ if (!review) {
         <dl class="space-y-3">
           <div>
             <dt class="text-sm text-gray-500 dark:text-gray-400">Gewicht</dt>
-            <dd class="text-lg font-semibold">{review.weight}g</dd>
+            <dd class="text-lg font-semibold">{review.data.weight}g</dd>
           </div>
           <div>
             <dt class="text-sm text-gray-500 dark:text-gray-400">Preis</dt>
-            <dd class="text-lg font-semibold">€{review.price.toFixed(2)}</dd>
+            <dd class="text-lg font-semibold">
+              €{review.data.price.toFixed(2)}
+            </dd>
           </div>
           <div>
             <dt class="text-sm text-gray-500 dark:text-gray-400">Rating</dt>
             <dd class="text-lg text-yellow-500">
-              {'★'.repeat(Math.floor(review.rating))}
-              {review.rating % 1 !== 0 && '☆'}
-              {' '}
-              {review.rating}/5
+              {'★'.repeat(Math.floor(review.data.rating))}
+              {review.data.rating % 1 !== 0 && '☆'}
+              {review.data.rating}/5
             </dd>
           </div>
         </dl>
       </div>
 
       {
-        review.shoe && (
+        (review.data.drop || review.data.grip || review.data.sole) && (
           <div class="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
             <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
               Schuh Details
             </h2>
             <dl class="space-y-3">
-              <div>
-                <dt class="text-sm text-gray-500 dark:text-gray-400">Drop</dt>
-                <dd class="text-lg font-semibold">{review.shoe.drop}mm</dd>
-              </div>
-              <div>
-                <dt class="text-sm text-gray-500 dark:text-gray-400">Grip</dt>
-                <dd class="text-lg font-semibold">{review.shoe.grip}</dd>
-              </div>
-              <div>
-                <dt class="text-sm text-gray-500 dark:text-gray-400">Sohle</dt>
-                <dd class="text-lg font-semibold">{review.shoe.sole}</dd>
-              </div>
+              {review.data.drop && (
+                <div>
+                  <dt class="text-sm text-gray-500 dark:text-gray-400">Drop</dt>
+                  <dd class="text-lg font-semibold">{review.data.drop}mm</dd>
+                </div>
+              )}
+              {review.data.grip && (
+                <div>
+                  <dt class="text-sm text-gray-500 dark:text-gray-400">Grip</dt>
+                  <dd class="text-lg font-semibold">{review.data.grip}</dd>
+                </div>
+              )}
+              {review.data.sole && (
+                <div>
+                  <dt class="text-sm text-gray-500 dark:text-gray-400">
+                    Sohle
+                  </dt>
+                  <dd class="text-lg font-semibold">{review.data.sole}</dd>
+                </div>
+              )}
             </dl>
           </div>
         )
@@ -111,24 +113,26 @@ if (!review) {
       >
         Review
       </h2>
-      <p class="text-lg leading-relaxed">{review.statement}</p>
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <Content />
+      </div>
     </div>
 
     {
-      review.productLinks.length > 0 && (
+      review.data.productLinks.length > 0 && (
         <div class="mb-8">
           <h2 class="text-light-text-heading mb-4 text-xl font-bold dark:text-white">
             Kaufen
           </h2>
           <div class="flex flex-wrap gap-4">
-            {review.productLinks.map((link) => (
+            {review.data.productLinks.map((link) => (
               <a
-                href={link.link}
+                href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
               >
-                {link.altText}
+                {link.text}
               </a>
             ))}
           </div>
@@ -137,10 +141,10 @@ if (!review) {
     }
 
     {
-      review.podcastEpisode && (
+      review.data.podcastEpisode && (
         <div class="mb-8">
           <a
-            href={review.podcastEpisode}
+            href={review.data.podcastEpisode}
             class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">

@@ -1,21 +1,22 @@
 ---
+export const prerender = true;
+
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 const reviews = await getCollection('reviews');
 const sortedReviews = reviews.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a, b) => b.data.date.valueOf() - a.data.valueOf()
 );
 ---
 
-<Layout title="Reviews">
+<Layout title="Gear Reviews">
   <div class="relative z-10 px-8 lg:px-18">
     <h1
       class="text-light-text-heading mb-4 text-2xl font-bold lg:mb-6 lg:text-5xl dark:text-white"
     >
-      Reviews
+      Gear Reviews
     </h1>
-
     <p class="mb-8">
       Hier findest du Reviews zu Laufschuhen, Equipment und mehr.
     </p>
@@ -27,13 +28,20 @@ const sortedReviews = reviews.sort(
             href={`/reviews/${review.slug}`}
             class="block rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-lg dark:border-gray-700"
           >
+            {review.data.pictureLinks[0] && (
+              <img
+                src={review.data.pictureLinks[0].url}
+                alt={review.data.pictureLinks[0].alt}
+                class="mb-4 h-48 w-full rounded object-cover"
+              />
+            )}
             <div class="mb-3">
               <h2 class="text-light-text-heading text-xl font-bold dark:text-white">
-                {review.data.title}
+                {review.data.productName}
               </h2>
               <div class="mt-2 flex items-center gap-2">
                 <span class="text-sm text-gray-500 dark:text-gray-400">
-                  {review.data.category}
+                  {review.data.brand}
                 </span>
                 <span class="text-sm text-gray-400">•</span>
                 <span class="text-sm text-yellow-500">
@@ -42,16 +50,10 @@ const sortedReviews = reviews.sort(
                 </span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 dark:text-gray-300">
-              {review.data.excerpt}
-            </p>
-            <time class="mt-4 block text-xs text-gray-400">
-              {review.data.date.toLocaleDateString('de-AT', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
+            <div class="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>{review.data.weight}g</span>
+              <span>€{review.data.price.toFixed(2)}</span>
+            </div>
           </a>
         ))
       }

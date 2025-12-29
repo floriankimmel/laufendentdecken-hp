@@ -36,28 +36,12 @@ jobs:
       - run: pnpm install
       - run: pnpm run build
 
-  deploy-backend:
-    name: Deploy Backend
-    runs-on: ubuntu-latest
-    environment: production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [check, build]
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy backend to Fly.io
-        run: flyctl deploy --remote-only --config apps/backend/fly.toml --dockerfile apps/backend/Dockerfile
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
   deploy-frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     environment: production
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [check, build, deploy-backend]
+    needs: [check, build]
     steps:
       - uses: actions/checkout@v4
 
@@ -69,7 +53,6 @@ jobs:
             --config apps/frontend/fly.toml \
             --dockerfile apps/frontend/Dockerfile \
             --build-arg ASTRO_DB_REMOTE_URL=${{ secrets.ASTRO_DB_REMOTE_URL }} \
-            --build-arg ASTRO_DB_APP_TOKEN=${{ secrets.ASTRO_DB_APP_TOKEN }} \
-            --build-arg PUBLIC_API_URL=${{ secrets.PUBLIC_API_URL }}
+            --build-arg ASTRO_DB_APP_TOKEN=${{ secrets.ASTRO_DB_APP_TOKEN }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

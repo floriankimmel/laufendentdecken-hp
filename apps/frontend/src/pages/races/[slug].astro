@@ -1,35 +1,28 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { getTrailEvent } from '../../lib/api/client';
 
-const { id } = Astro.params;
-
-if (!id) {
-  return Astro.redirect('/events');
+export async function getStaticPaths() {
+  const races = await getCollection('races');
+  return races.map((race) => ({
+    params: { slug: race.slug },
+    props: { race }
+  }));
 }
 
-let event = null;
-
-try {
-  event = await getTrailEvent(id);
-} catch (e) {
-  console.error('Error fetching trail event:', e);
-}
-
-if (!event) {
-  return Astro.redirect('/events');
-}
+const { race } = Astro.props;
+const { Content } = await race.render();
 ---
 
-<Layout title={`${event.name} - Trail Event`}>
+<Layout title={`${race.data.name} - Trail Race`}>
   <div class="relative z-10 px-8 lg:px-18">
     <div class="mb-8">
       <h1
         class="text-light-text-heading mb-4 text-3xl font-bold lg:text-5xl dark:text-white"
       >
-        {event.name}
+        {race.data.name}
       </h1>
 
       <div class="flex flex-col gap-3 text-lg text-gray-600 dark:text-gray-400">
@@ -49,7 +42,7 @@ if (!event) {
           </svg>
           <span>
             {
-              new Date(event.date).toLocaleDateString('de-AT', {
+              race.data.date.toLocaleDateString('de-AT', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -76,28 +69,28 @@ if (!event) {
               stroke-width="2"
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
           </svg>
-          <span>{event.location}</span>
+          <span>{race.data.location}</span>
         </div>
       </div>
     </div>
 
     {
-      event.distances.length > 0 && (
+      race.data.distances.length > 0 && (
         <div class="mb-8">
           <h2 class="text-light-text-heading mb-4 text-2xl font-bold dark:text-white">
             Verfügbare Distanzen
           </h2>
           <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {event.distances.map((distance) => (
+            {race.data.distances.map((distance) => (
               <div class="rounded-lg border border-gray-200 p-6 dark:border-gray-700">
                 <div class="mb-4">
                   <div class="text-4xl font-bold text-blue-600 dark:text-blue-400">
-                    {distance.distance}km
+                    {distance.km}km
                   </div>
                 </div>
-                {distance.gpxLink && (
+                {distance.gpxUrl && (
                   <a
-                    href={distance.gpxLink}
+                    href={distance.gpxUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
@@ -125,14 +118,18 @@ if (!event) {
       )
     }
 
+    <div class="prose prose-lg dark:prose-invert mb-8 max-w-none">
+      <Content />
+    </div>
+
     {
-      event.podcastEpisode && (
+      race.data.podcastEpisode && (
         <div class="mb-8 rounded-lg border border-gray-200 p-6 dark:border-gray-700">
           <h2 class="text-light-text-heading mb-4 text-2xl font-bold dark:text-white">
             Podcast Episode
           </h2>
           <a
-            href={event.podcastEpisode}
+            href={race.data.podcastEpisode}
             class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
