@@ -1,4 +1,5 @@
 import { htmlToText } from 'html-to-text';
+import { decode as decodeHtmlEntities } from 'he';
 import parseFeed from 'rss-to-json';
 import { array, number, object, optional, parse, string } from 'valibot';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -156,6 +157,9 @@ export async function getAllEpisodes(
           const episodeNumber =
             itunes_episodeType === 'bonus' ? 'Bonus' : `${itunes_episode}`;
           const episodeSlug = dasherize(title);
+          const episodeImageUrl = itunes_image?.href
+            ? decodeHtmlEntities(itunes_image.href)
+            : undefined;
 
           return {
             id,
@@ -163,10 +167,10 @@ export async function getAllEpisodes(
             content: content_encoded || description, // Use full content if available, fallback to description
             description: truncate(htmlToText(description), 260),
             duration: parseDuration(itunes_duration),
-            episodeImage: itunes_image?.href,
+            episodeImage: episodeImageUrl,
             episodeNumber,
             episodeSlug,
-            episodeThumbnail: await optimizeImage(itunes_image?.href, {
+            episodeThumbnail: await optimizeImage(episodeImageUrl, {
               height: 160,
               width: 160
             }),
