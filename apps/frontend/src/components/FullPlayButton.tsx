@@ -72,9 +72,9 @@ export default function FullPlayButton({ episode }: Props) {
             ? renderIcon(PauseIcon, 'pause')
             : renderIcon(PlayIcon, 'play')}
         </span>
-        {showPauseIcon ? 'Pause' : 'Play'} Episode
+        Episode {showPauseIcon ? 'pausieren' : 'abspielen'}
         <span class="sr-only">
-          (press to {showPauseIcon ? 'pause' : 'play'})
+          (zum {showPauseIcon ? 'Pausieren' : 'Abspielen'} drücken)
         </span>
       </span>
     </button>

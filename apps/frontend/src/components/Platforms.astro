@@ -7,7 +7,7 @@ const { platforms } = starpodConfig;
 const show = await getShowInfo();
 ---
 
-<h3 class="section-heading hidden pt-12 pb-6 lg:block">Listen</h3>
+<h3 class="section-heading hidden pt-12 pb-6 lg:block">Hören</h3>
 
 <div
   class="mt-16 flex items-center justify-center gap-6 lg:mt-0 lg:justify-start"
@@ -17,7 +17,7 @@ const show = await getShowInfo();
       <a
         class="gradient-icon spotify h-6 w-6"
         href={platforms.spotify}
-        aria-label={`Listen to ${show.title} on Spotify.`}
+        aria-label={`Höre ${show.title} auf Spotify.`}
       />
     )
   }
@@ -26,7 +26,7 @@ const show = await getShowInfo();
       <a
         class="gradient-icon apple h-6 w-6"
         href={platforms.apple}
-        aria-label={`Listen to ${show.title} on Apple Podcasts.`}
+        aria-label={`Höre ${show.title} auf Apple Podcasts.`}
       />
     )
   }
@@ -35,7 +35,7 @@ const show = await getShowInfo();
       <a
         class="gradient-icon overcast h-6 w-6"
         href={platforms.overcast}
-        aria-label={`Listen to ${show.title} on Overcast.`}
+        aria-label={`Höre ${show.title} auf Overcast.`}
       />
     )
   }
@@ -44,7 +44,7 @@ const show = await getShowInfo();
       <a
         class="gradient-icon pocket-casts h-6 w-6"
         href={platforms.pocketCasts}
-        aria-label={`Listen to ${show.title} on Pocket Casts.`}
+        aria-label={`Höre ${show.title} auf Pocket Casts.`}
       />
     )
   }
@@ -53,7 +53,7 @@ const show = await getShowInfo();
       <a
         class="gradient-icon youtube h-7 w-7"
         href={platforms.youtube}
-        aria-label={`Watch ${show.title} on YouTube.`}
+        aria-label={`Schaue ${show.title} auf YouTube.`}
       />
     )
   }

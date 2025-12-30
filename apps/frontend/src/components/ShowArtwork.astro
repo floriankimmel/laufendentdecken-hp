@@ -6,21 +6,21 @@ export interface Props {
 const { image } = Astro.props;
 ---
 
-<a href="/" aria-label="Homepage">
+<a href="/" aria-label="Startseite">
   <div class="px-4 sm:px-6 md:px-4 lg:px-16">
     <div class="atropos show-art">
       <div class="atropos-scale">
         <div class="atropos-rotate">
           <div class="atropos-inner">
             <div
-              class="relative mx-auto block w-48 overflow-hidden rounded-lg sm:w-64 sm:rounded-xl lg:w-auto lg:rounded-2xl"
+              class="relative mx-auto block w-24 overflow-hidden rounded-lg sm:w-32 sm:rounded-xl lg:w-40 lg:rounded-2xl"
             >
               <img
                 class="w-full"
                 src={image}
                 alt=""
-                height="321"
-                width="321"
+                height="160"
+                width="160"
                 loading="eager"
                 fetchpriority="high"
               />
