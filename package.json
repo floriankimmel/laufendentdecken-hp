@@ -20,7 +20,7 @@
     "fix:prettier": "pnpm --filter frontend exec prettier -w ."
   },
   "engines": {
-    "node": "^22.0.0"
+    "node": ">=22.0.0"
   },
   "packageManager": "pnpm@10.19.0",
   "pnpm": {
