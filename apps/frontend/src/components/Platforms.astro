@@ -15,45 +15,100 @@ const show = await getShowInfo();
   {
     platforms?.spotify && (
       <a
-        class="gradient-icon spotify h-6 w-6"
+        class="gradient-icon spotify platform-icon h-6 w-6"
         href={platforms.spotify}
         aria-label={`Höre ${show.title} auf Spotify.`}
+        data-tooltip="Spotify"
       />
     )
   }
   {
     platforms?.apple && (
       <a
-        class="gradient-icon apple h-6 w-6"
+        class="gradient-icon apple platform-icon h-6 w-6"
         href={platforms.apple}
         aria-label={`Höre ${show.title} auf Apple Podcasts.`}
+        data-tooltip="Apple Podcasts"
       />
     )
   }
   {
     platforms?.overcast && (
       <a
-        class="gradient-icon overcast h-6 w-6"
+        class="gradient-icon overcast platform-icon h-6 w-6"
         href={platforms.overcast}
         aria-label={`Höre ${show.title} auf Overcast.`}
+        data-tooltip="Overcast"
       />
     )
   }
   {
     platforms?.pocketCasts && (
       <a
-        class="gradient-icon pocket-casts h-6 w-6"
+        class="gradient-icon pocket-casts platform-icon h-6 w-6"
         href={platforms.pocketCasts}
         aria-label={`Höre ${show.title} auf Pocket Casts.`}
+        data-tooltip="Pocket Casts"
       />
     )
   }
   {
     platforms?.youtube && (
       <a
-        class="gradient-icon youtube h-7 w-7"
+        class="gradient-icon youtube platform-icon h-7 w-7"
         href={platforms.youtube}
         aria-label={`Schaue ${show.title} auf YouTube.`}
+        data-tooltip="YouTube"
+      />
+    )
+  }
+  {
+    platforms?.x && (
+      <a
+        class="gradient-icon x platform-icon h-6 w-6"
+        href={platforms.x}
+        aria-label={`Folge ${show.title} auf X.`}
+        data-tooltip="X"
+      />
+    )
+  }
+  {
+    platforms?.instagram && (
+      <a
+        class="gradient-icon instagram platform-icon h-6 w-6"
+        href={platforms.instagram}
+        aria-label={`Folge ${show.title} auf Instagram.`}
+        data-tooltip="Instagram"
+      />
+    )
+  }
+  {
+    platforms?.facebook && (
+      <a
+        class="gradient-icon facebook platform-icon h-6 w-6"
+        href={platforms.facebook}
+        aria-label={`Folge ${show.title} auf Facebook.`}
+        data-tooltip="Facebook"
+      />
+    )
+  }
+  {
+    platforms?.steadyhq && (
+      <a
+        class="gradient-icon steadyhq platform-icon h-6 w-6"
+        href={platforms.steadyhq}
+        aria-label={`Unterstütze ${show.title} auf SteadyHQ.`}
+        data-tooltip="SteadyHQ"
+      />
+    )
+  }
+  {
+    platforms?.patreon && (
+      <a
+        class="gradient-icon patreon platform-icon h-6 w-6"
+        href={platforms.patreon}
+        aria-label={`Unterstütze ${show.title} auf Patreon.`}
+        data-tooltip="Patreon"
       />
     )
   }
@@ -77,5 +132,51 @@ const show = await getShowInfo();
 
   .youtube {
     mask-image: url(/images/youtube.svg);
+  }
+
+  .x {
+    mask-image: url(/images/x.svg);
+  }
+
+  .instagram {
+    mask-image: url(/images/instagram.svg);
+  }
+
+  .facebook {
+    mask-image: url(/images/facebook.svg);
+  }
+
+  .steadyhq {
+    mask-image: url(/images/steadyhq.svg);
+  }
+
+  .patreon {
+    mask-image: url(/images/patreon.svg);
+  }
+
+  .platform-icon {
+    position: relative;
+  }
+
+  .platform-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    margin-bottom: 0.5rem;
+  }
+
+  .platform-icon:hover::after {
+    opacity: 1;
   }
 </style>

@@ -9,6 +9,10 @@ export interface Props {
 
 const { title } = Astro.props;
 
+// Extract episode number from title (e.g., "LEP#343 - ..." -> "#343")
+const episodeMatch = title.match(/LEP#(\d+)/i);
+const displayTitle = episodeMatch ? `#${episodeMatch[1]}` : title;
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -55,7 +59,7 @@ const breadcrumbSchema = {
           href={url}
           class="ml-4 line-clamp-1 font-medium text-gray-500 hover:text-gray-700"
         >
-          {title}
+          {displayTitle}
         </a>
       </div>
     </li>
