@@ -28,6 +28,15 @@ function parseDuration(duration: string | number | undefined): number {
   return 0;
 }
 
+function replaceWordPressEmojis(html: string): string {
+  // Replace WordPress emoji images with native Unicode emojis
+  // Pattern: <img ... alt="emoji" ... class="wp-smiley" ... />
+  return html.replace(
+    /<img[^>]*\balt="([^"]*)"[^>]*\bclass="[^"]*wp-smiley[^"]*"[^>]*\/?>/gi,
+    '$1'
+  );
+}
+
 export interface Show {
   title: string;
   description: string;
@@ -161,10 +170,11 @@ export async function getAllEpisodes(
             ? he.decode(itunes_image.href)
             : undefined;
 
+          const rawContent = content_encoded || description;
           return {
             id,
             title: `${title}`,
-            content: content_encoded || description, // Use full content if available, fallback to description
+            content: replaceWordPressEmojis(rawContent), // Replace WP emoji images with native emojis
             description: truncate(htmlToText(description), 260),
             duration: parseDuration(itunes_duration),
             episodeImage: episodeImageUrl,
