@@ -53,7 +53,7 @@ export interface Episode {
 
 let showInfoCache: Show | null = null;
 
-export async function getShowInfo(skipCache = false) {
+export async function getShowInfo(skipCache = false): Promise<Show> {
   if (showInfoCache && !skipCache) {
     return showInfoCache;
   }
@@ -93,7 +93,9 @@ export async function getShowInfo(skipCache = false) {
 
 let episodesCache: Array<Episode> | null = null;
 
-export async function getAllEpisodes(skipCache = false) {
+export async function getAllEpisodes(
+  skipCache = false
+): Promise<Array<Episode>> {
   if (episodesCache && !skipCache) {
     return episodesCache;
   }

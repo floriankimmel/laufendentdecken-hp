@@ -20,7 +20,7 @@ import Sponsors from '../components/episode/Sponsors.astro';
 import PlayButton from '../components/player/PlayButton';
 import FullPlayButton from '../components/FullPlayButton';
 import Layout from '../layouts/Layout.astro';
-import { getAllEpisodes, getShowInfo } from '../lib/rss';
+import { getAllEpisodes, getShowInfo, type Episode } from '../lib/rss';
 import { dasherize } from '../utils/dasherize';
 
 const show = await getShowInfo();
@@ -28,7 +28,7 @@ const show = await getShowInfo();
 export async function getStaticPaths() {
   const allEpisodes = await getAllEpisodes();
 
-  return allEpisodes.map((episode) => {
+  return allEpisodes.map((episode: Episode) => {
     return {
       params: { episode: episode.episodeNumber },
       props: { episode }

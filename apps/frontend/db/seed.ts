@@ -37,7 +37,7 @@ export default async function seed() {
     });
 
   const allEpisodes = await getAllEpisodes();
-  const episodes = allEpisodes.map((episode) => {
+  const episodes = allEpisodes.map((episode: { episodeSlug: string }) => {
     return {
       episodeSlug: episode.episodeSlug
     };
