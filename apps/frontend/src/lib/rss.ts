@@ -1,5 +1,5 @@
 import { htmlToText } from 'html-to-text';
-import { decode as decodeHtmlEntities } from 'he';
+import he from 'he';
 import parseFeed from 'rss-to-json';
 import { array, number, object, optional, parse, string } from 'valibot';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -158,7 +158,7 @@ export async function getAllEpisodes(
             itunes_episodeType === 'bonus' ? 'Bonus' : `${itunes_episode}`;
           const episodeSlug = dasherize(title);
           const episodeImageUrl = itunes_image?.href
-            ? decodeHtmlEntities(itunes_image.href)
+            ? he.decode(itunes_image.href)
             : undefined;
 
           return {
