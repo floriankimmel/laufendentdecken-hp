@@ -43,7 +43,7 @@ jobs:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     environment: production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
     needs: [check, build]
     steps:
       - uses: actions/checkout@v4
