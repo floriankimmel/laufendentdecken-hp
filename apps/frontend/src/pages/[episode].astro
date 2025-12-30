@@ -28,17 +28,11 @@ const show = await getShowInfo();
 export async function getStaticPaths() {
   const allEpisodes = await getAllEpisodes();
 
-  return allEpisodes.flatMap((episode) => {
-    return [
-      {
-        params: { episode: episode.episodeNumber },
-        props: { episode }
-      },
-      {
-        params: { episode: episode.episodeSlug },
-        props: { episode }
-      }
-    ];
+  return allEpisodes.map((episode) => {
+    return {
+      params: { episode: episode.episodeNumber },
+      props: { episode }
+    };
   });
 }
 

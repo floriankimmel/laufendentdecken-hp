@@ -1,11 +1,17 @@
 import { htmlToText } from 'html-to-text';
 import parseFeed from 'rss-to-json';
 import { array, number, object, optional, parse, string } from 'valibot';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 import { optimizeImage } from './optimize-episode-image';
 import { dasherize } from '../utils/dasherize';
 import { truncate } from '../utils/truncate';
 import starpodConfig from '../../starpod.config';
+
+const CACHE_DIR = join(process.cwd(), '.cache');
+const SHOW_CACHE_FILE = join(CACHE_DIR, 'show-info.json');
+const EPISODES_CACHE_FILE = join(CACHE_DIR, 'episodes.json');
 
 function parseDuration(duration: string | number | undefined): number {
   if (!duration) return 0;
@@ -47,18 +53,39 @@ export interface Episode {
 
 let showInfoCache: Show | null = null;
 
-export async function getShowInfo() {
-  if (showInfoCache) {
+export async function getShowInfo(skipCache = false) {
+  if (showInfoCache && !skipCache) {
     return showInfoCache;
   }
 
+  // Try to load from file cache
+  if (!skipCache && existsSync(SHOW_CACHE_FILE)) {
+    try {
+      const cached = JSON.parse(readFileSync(SHOW_CACHE_FILE, 'utf-8'));
+      showInfoCache = cached;
+      return cached;
+    } catch (e) {
+      console.warn('Failed to read show cache, refetching...');
+    }
+  }
+
+  // Fetch from RSS
   // @ts-expect-error
   const showInfo = (await parseFeed.parse(starpodConfig.rssFeed)) as Show;
-  // Skip image optimization to prevent build failures
-  // showInfo.image = (await optimizeImage(showInfo.image, {
-  //   height: 640,
-  //   width: 640
-  // })) as string;
+  showInfo.image = (await optimizeImage(showInfo.image, {
+    height: 640,
+    width: 640
+  })) as string;
+
+  // Save to file cache
+  try {
+    if (!existsSync(CACHE_DIR)) {
+      mkdirSync(CACHE_DIR, { recursive: true });
+    }
+    writeFileSync(SHOW_CACHE_FILE, JSON.stringify(showInfo, null, 2));
+  } catch (e) {
+    console.warn('Failed to write show cache:', e);
+  }
 
   showInfoCache = showInfo;
   return showInfo;
@@ -66,10 +93,22 @@ export async function getShowInfo() {
 
 let episodesCache: Array<Episode> | null = null;
 
-export async function getAllEpisodes() {
-  if (episodesCache) {
+export async function getAllEpisodes(skipCache = false) {
+  if (episodesCache && !skipCache) {
     return episodesCache;
   }
+
+  // Try to load from file cache
+  if (!skipCache && existsSync(EPISODES_CACHE_FILE)) {
+    try {
+      const cached = JSON.parse(readFileSync(EPISODES_CACHE_FILE, 'utf-8'));
+      episodesCache = cached;
+      return cached;
+    } catch (e) {
+      console.warn('Failed to read episodes cache, refetching...');
+    }
+  }
+
   let FeedSchema = object({
     items: array(
       object({
@@ -125,7 +164,10 @@ export async function getAllEpisodes() {
             episodeImage: itunes_image?.href,
             episodeNumber,
             episodeSlug,
-            episodeThumbnail: itunes_image?.href, // Skip optimization to prevent build failures
+            episodeThumbnail: await optimizeImage(itunes_image?.href, {
+              height: 160,
+              width: 160
+            }),
             published,
             audio: enclosures.map((enclosure) => ({
               src: enclosure.url,
@@ -135,6 +177,16 @@ export async function getAllEpisodes() {
         }
       )
   );
+
+  // Save to file cache
+  try {
+    if (!existsSync(CACHE_DIR)) {
+      mkdirSync(CACHE_DIR, { recursive: true });
+    }
+    writeFileSync(EPISODES_CACHE_FILE, JSON.stringify(episodes, null, 2));
+  } catch (e) {
+    console.warn('Failed to write episodes cache:', e);
+  }
 
   episodesCache = episodes;
   return episodes;
