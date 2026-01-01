@@ -16,7 +16,7 @@ const { episodes, show } = Astro.props;
   episodes.map((episode) => {
     return (
       <li class="dark:border-dark-border border-b">
-        <div class="flex w-full flex-col py-12 lg:flex-row">
+        <div class="flex w-full flex-col items-center py-12 lg:flex-row lg:items-start">
           <img
             alt={`${episode.title} - episode art`}
             aria-hidden="true"
@@ -27,7 +27,7 @@ const { episodes, show } = Astro.props;
             width={160}
           />
 
-          <div class="flex flex-col">
+          <div class="flex flex-col text-center lg:text-left">
             <FormattedDate date={new Date(episode.published)} />
 
             <h2 class="text-light-text-heading my-2 text-lg font-bold dark:text-white">
@@ -44,7 +44,7 @@ const { episodes, show } = Astro.props;
 
             <p class="mb-5">{episode.description}</p>
 
-            <div class="flex items-center gap-6 text-sm">
+            <div class="flex items-center justify-center gap-6 text-sm lg:justify-start">
               <FullPlayButton
                 client:visible
                 episode={{
