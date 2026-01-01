@@ -1,0 +1,23 @@
+{
+  "config": "SSR (Server-Side Rendering)",
+  "astro_output": "server",
+  "measurements": {
+    "/": {
+      "LCP": "244 ms",
+      "TTFB": "139 ms",
+      "loadDelay": "48 ms",
+      "loadDuration": "5 ms",
+      "renderDelay": "53 ms",
+      "CLS": "0.03"
+    },
+    "/about": {
+      "LCP": "93 ms",
+      "TTFB": "7 ms",
+      "loadDelay": "33 ms",
+      "loadDuration": "3 ms",
+      "renderDelay": "49 ms",
+      "CLS": "0.00"
+    }
+  },
+  "notes": "SSR with RSS cache (.cache/ dir), dev server"
+}

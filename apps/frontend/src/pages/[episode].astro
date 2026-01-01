@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import { getEntry } from 'astro:content';
 import {
   db,
@@ -20,23 +18,15 @@ import Sponsors from '../components/episode/Sponsors.astro';
 import PlayButton from '../components/player/PlayButton';
 import FullPlayButton from '../components/FullPlayButton';
 import Layout from '../layouts/Layout.astro';
-import { getAllEpisodes, getShowInfo, type Episode } from '../lib/rss';
+import { getAllEpisodes, getShowInfo } from '../lib/rss';
 import { dasherize } from '../utils/dasherize';
 
 const show = await getShowInfo();
 
-export async function getStaticPaths() {
-  const allEpisodes = await getAllEpisodes();
-
-  return allEpisodes.map((episode: Episode) => {
-    return {
-      params: { episode: episode.episodeNumber },
-      props: { episode }
-    };
-  });
-}
-
-const { episode } = Astro.props;
+// SSR: Fetch episode dynamically based on URL param
+const episodeNumber = Astro.params.episode;
+const allEpisodes = await getAllEpisodes();
+const episode = allEpisodes.find((ep) => ep.episodeNumber === episodeNumber);
 
 if (!episode) {
   return Astro.redirect('/404');
