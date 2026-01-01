@@ -1,6 +1,10 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "flyctl": {
+      "resolved": "github:NixOS/nixpkgs/0d70460758949966e91d9ecb823b821f963cefbb?narHash=sha256-fhD%2FQUtJ0HKs3oLvfnD%2B%2FSrBV5Y7YEkCYnDjOVUjLys%3D#flyctl",
+      "source": "nixpkg"
+    },
     "gh": {
       "resolved": "github:NixOS/nixpkgs/0d70460758949966e91d9ecb823b821f963cefbb?narHash=sha256-fhD%2FQUtJ0HKs3oLvfnD%2B%2FSrBV5Y7YEkCYnDjOVUjLys%3D#gh",
       "source": "nixpkg"
