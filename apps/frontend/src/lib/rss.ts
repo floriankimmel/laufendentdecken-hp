@@ -115,21 +115,16 @@ async function fetchWordPressFeaturedImage(
   episodeNumber: string,
   content: string
 ): Promise<string | undefined> {
-  // Skip in dev mode for faster builds
-  if (import.meta.env.DEV) {
-    return undefined;
-  }
-
   // First try to extract from content (no extra request needed)
   const contentImage = extractFeaturedImageFromContent(content);
   if (contentImage) {
     return contentImage;
   }
 
-  // Fallback: fetch the page (slower)
+  // Fallback: fetch the page (with short timeout)
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 2000); // 2s timeout
 
     const response = await fetch(
       `https://laufendentdecken-podcast.at/${episodeNumber}/`,
