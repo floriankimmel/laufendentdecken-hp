@@ -55,6 +55,7 @@ export interface Episode {
   episodeNumber?: string;
   episodeSlug: string;
   episodeThumbnail?: string;
+  featuredImage?: string;
   audio: {
     src: string;
     type: string;
@@ -99,6 +100,52 @@ export async function getShowInfo(skipCache = false): Promise<Show> {
 
   showInfoCache = showInfo;
   return showInfo;
+}
+
+function extractFeaturedImageFromContent(content: string): string | undefined {
+  // Try to find wordpress.png in content first (fastest)
+  const wpMatch = content.match(/wp-content\/uploads\/[^"]*wordpress\.png/);
+  if (wpMatch) {
+    return `https://laufendentdecken-podcast.at/${wpMatch[0]}`;
+  }
+  return undefined;
+}
+
+async function fetchWordPressFeaturedImage(
+  episodeNumber: string,
+  content: string
+): Promise<string | undefined> {
+  // Skip in dev mode for faster builds
+  if (import.meta.env.DEV) {
+    return undefined;
+  }
+
+  // First try to extract from content (no extra request needed)
+  const contentImage = extractFeaturedImageFromContent(content);
+  if (contentImage) {
+    return contentImage;
+  }
+
+  // Fallback: fetch the page (slower)
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+
+    const response = await fetch(
+      `https://laufendentdecken-podcast.at/${episodeNumber}/`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timeoutId);
+
+    const html = await response.text();
+    const match = html.match(/wp-content\/uploads\/[^"]*wordpress\.png/);
+    if (match) {
+      return `https://laufendentdecken-podcast.at/${match[0]}`;
+    }
+  } catch (e) {
+    // Silently fail - not critical
+  }
+  return undefined;
 }
 
 let episodesCache: Array<Episode> | null = null;
@@ -171,6 +218,11 @@ export async function getAllEpisodes(
             : undefined;
 
           const rawContent = content_encoded || description;
+          const featuredImage = await fetchWordPressFeaturedImage(
+            episodeNumber,
+            rawContent
+          );
+
           return {
             id,
             title: `${title}`,
@@ -184,6 +236,7 @@ export async function getAllEpisodes(
               height: 160,
               width: 160
             }),
+            featuredImage,
             published,
             audio: enclosures.map((enclosure) => ({
               src: enclosure.url,

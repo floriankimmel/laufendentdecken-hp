@@ -120,6 +120,15 @@ const title = `${episode.title} - ${show.title} - Episode ${episode.episodeNumbe
       ))
   }
 
+  <div class="relative z-20 pb-8 lg:pb-12">
+    <img
+      alt={`${episode.title} - episode art`}
+      class="h-auto w-full rounded-2xl shadow-xl"
+      loading="eager"
+      src={episode.featuredImage ?? episode.episodeImage ?? show.image}
+    />
+  </div>
+
   <div class="relative z-10 px-8 lg:px-18">
     <div class="block lg:flex">
       <div class="mt-4 mr-11 hidden h-14 w-14 shrink-0 lg:block">
