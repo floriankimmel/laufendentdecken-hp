@@ -33,7 +33,7 @@
   "workspaces": [
     "apps/*"
   ],
-  "resolutions": {
+  "overrides": {
     "@emmetio/css-parser": "npm:@emmetio/css-parser@0.4.0"
   }
 }
