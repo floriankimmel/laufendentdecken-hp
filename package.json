@@ -29,5 +29,8 @@
     "@vercel/speed-insights",
     "esbuild",
     "sharp"
+  ],
+  "workspaces": [
+    "apps/*"
   ]
 }
