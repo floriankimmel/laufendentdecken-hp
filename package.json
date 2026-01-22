@@ -4,12 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --filter \"./apps/*\" dev",
-    "dev:frontend": "bun --filter frontend dev",
-    "dev:backend": "bun --filter backend dev",
+    "dev": "bun --filter frontend dev",
     "build": "bun --filter frontend build",
-    "build:frontend": "bun --filter frontend build",
-    "build:backend": "bun --filter backend build",
     "lint": "bun --filter frontend lint",
     "test": "bun --filter frontend test",
     "check": "bun check:lint && bun check:prettier",
