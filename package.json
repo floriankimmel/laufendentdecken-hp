@@ -13,7 +13,8 @@
     "check:prettier": "bun --filter frontend format:check",
     "fix": "bun fix:lint && bun fix:prettier",
     "fix:lint": "bun --filter frontend lint:fix",
-    "fix:prettier": "bun --filter frontend format"
+    "fix:prettier": "bun --filter frontend format",
+    "prepare": "cd apps/frontend && simple-git-hooks"
   },
   "engines": {
     "node": ">=22.0.0",
@@ -31,5 +32,8 @@
   ],
   "overrides": {
     "@emmetio/css-parser": "npm:@emmetio/css-parser@0.4.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "cd apps/frontend && npx lint-staged"
   }
 }
