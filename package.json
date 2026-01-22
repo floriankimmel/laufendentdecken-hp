@@ -4,31 +4,30 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter \"./apps/*\" dev",
-    "dev:frontend": "pnpm --filter frontend dev",
-    "dev:backend": "pnpm --filter backend dev",
-    "build": "pnpm --filter frontend build",
-    "build:frontend": "pnpm --filter frontend build",
-    "build:backend": "pnpm --filter backend build",
-    "lint": "pnpm --filter frontend lint",
-    "test": "pnpm --filter frontend test",
-    "check": "pnpm check:lint && pnpm check:prettier",
-    "check:lint": "pnpm --filter frontend lint",
-    "check:prettier": "pnpm --filter frontend exec prettier --check .",
-    "fix": "pnpm fix:lint && pnpm fix:prettier",
-    "fix:lint": "pnpm --filter frontend lint:fix",
-    "fix:prettier": "pnpm --filter frontend exec prettier -w ."
+    "dev": "bun --filter \"./apps/*\" dev",
+    "dev:frontend": "bun --filter frontend dev",
+    "dev:backend": "bun --filter backend dev",
+    "build": "bun --filter frontend build",
+    "build:frontend": "bun --filter frontend build",
+    "build:backend": "bun --filter backend build",
+    "lint": "bun --filter frontend lint",
+    "test": "bun --filter frontend test",
+    "check": "bun check:lint && bun check:prettier",
+    "check:lint": "bun --filter frontend lint",
+    "check:prettier": "bun --filter frontend format:check",
+    "fix": "bun fix:lint && bun fix:prettier",
+    "fix:lint": "bun --filter frontend lint:fix",
+    "fix:prettier": "bun --filter frontend format"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.0.0",
+    "bun": ">=1.0.0"
   },
-  "packageManager": "pnpm@10.19.0",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "@vercel/speed-insights",
-      "esbuild",
-      "sharp"
-    ]
-  }
+  "packageManager": "bun@1.1.44",
+  "trustedDependencies": [
+    "@tailwindcss/oxide",
+    "@vercel/speed-insights",
+    "esbuild",
+    "sharp"
+  ]
 }

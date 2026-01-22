@@ -10,7 +10,7 @@ laufendentdecken-hp/
 │   ├── frontend/     # Astro frontend application
 │   └── backend/      # Hono backend API (SQLite + Prisma)
 ├── package.json      # Root workspace configuration
-└── pnpm-workspace.yaml
+└── bunfig.toml
 ```
 
 ## Tech Stack
@@ -33,54 +33,54 @@ laufendentdecken-hp/
 ### Development
 ```bash
 # Run all apps
-pnpm dev
+bun dev
 
 # Run specific app
-pnpm dev:frontend
-pnpm dev:backend
+bun dev:frontend
+bun dev:backend
 ```
 
 ### Build
 ```bash
 # Build all apps
-pnpm build
+bun build
 
 # Build specific app
-pnpm build:frontend
-pnpm build:backend
+bun build:frontend
+bun build:backend
 ```
 
 ### Database
 ```bash
 # Backend commands (run from root or apps/backend)
-pnpm --filter backend db:push      # Push schema to database
-pnpm --filter backend db:generate  # Generate Prisma Client
-pnpm --filter backend db:seed      # Seed database with sample data
+bun --filter backend db:push      # Push schema to database
+bun --filter backend db:generate  # Generate Prisma Client
+bun --filter backend db:seed      # Seed database with sample data
 ```
 
 ### Other
 ```bash
-pnpm lint    # Lint all apps
-pnpm test    # Test all apps
+bun lint    # Lint all apps
+bun test    # Test all apps
 ```
 
 ## Getting Started
 
 1. Install dependencies:
    ```bash
-   pnpm install
+   bun install
    ```
 
 2. Set up backend database:
    ```bash
    cd apps/backend
-   pnpm db:push    # Creates database
-   pnpm db:seed    # Seeds sample data
+   bun run db:push    # Creates database
+   bun run db:seed    # Seeds sample data
    ```
 
 3. Start development:
    ```bash
-   pnpm dev
+   bun dev
    ```
 
 Frontend: http://localhost:4321

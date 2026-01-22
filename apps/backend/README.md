@@ -14,8 +14,8 @@ If you need to export the data again:
 
 ```bash
 cd apps/backend
-pnpm install
-pnpm tsx scripts/export-to-markdown.ts
+bun install
+bun run tsx scripts/export-to-markdown.ts
 ```
 
 ## Database

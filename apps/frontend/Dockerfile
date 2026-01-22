@@ -1,15 +1,12 @@
-FROM node:22-alpine AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+FROM oven/bun:1-alpine AS base
 
 FROM base AS build
 WORKDIR /app
 # Copy monorepo root files
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY bun.lock bunfig.toml package.json ./
 # Copy frontend app
 COPY apps/frontend ./apps/frontend
-RUN pnpm install --frozen-lockfile --filter frontend
+RUN bun install --frozen-lockfile --filter frontend
 # Astro DB with libSQL (Turso) for --remote build
 ARG ASTRO_DB_REMOTE_URL
 ARG ASTRO_DB_APP_TOKEN
@@ -20,15 +17,15 @@ ARG PUBLIC_API_URL
 ENV PUBLIC_API_URL=$PUBLIC_API_URL
 # Run build from frontend directory
 WORKDIR /app/apps/frontend
-RUN pnpm build
+RUN bun run build
 
 FROM base
 WORKDIR /app
 # Copy monorepo root files
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+COPY bun.lock bunfig.toml package.json ./
 # Copy frontend app package.json
 COPY apps/frontend/package.json ./apps/frontend/package.json
-RUN pnpm install --prod --frozen-lockfile --filter frontend
+RUN bun install --production --frozen-lockfile --filter frontend
 WORKDIR /app/apps/frontend
 COPY --from=build /app/apps/frontend/dist ./dist
 

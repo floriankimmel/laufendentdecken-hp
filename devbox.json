@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
-  "packages": ["nodejs@24", "git", "gh", "flyctl"],
+  "packages": ["nodejs@24", "bun", "git", "gh", "flyctl"],
   "shell": {
     "init_hook": ["[ -f .env ] && export $(grep -v '^#' .env | xargs) || true"],
     "scripts": {
-      "dev": ["pnpm dev"],
-      "build": ["pnpm build"],
-      "check": ["pnpm check"],
-      "fix": ["pnpm fix"],
-      "install": ["pnpm install"]
+      "dev": ["bun dev"],
+      "build": ["bun build"],
+      "check": ["bun check"],
+      "fix": ["bun fix"],
+      "install": ["bun install"]
     }
   }
 }

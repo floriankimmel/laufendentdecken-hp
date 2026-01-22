@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-pnpm monorepo for podcast website. Frontend (Astro), backend (Hono + Prisma + SQLite). Episodes fetched from RSS feed, cached.
+bun monorepo for podcast website. Frontend (Astro), backend (Hono + Prisma + SQLite). Episodes fetched from RSS feed, cached.
 
 ## Architecture
 
@@ -24,44 +24,44 @@ pnpm monorepo for podcast website. Frontend (Astro), backend (Hono + Prisma + SQ
 
 ### Dev
 ```bash
-pnpm dev                 # all apps
-pnpm dev:frontend        # frontend only
-pnpm dev:backend         # backend only
+bun dev                 # all apps
+bun dev:frontend        # frontend only
+bun dev:backend         # backend only
 ```
 
 ### Build
 ```bash
-pnpm build               # builds frontend (includes astro check)
-pnpm build:frontend      # same
-pnpm build:backend       # backend build
+bun build               # builds frontend (includes astro check)
+bun build:frontend      # same
+bun build:backend       # backend build
 ```
 
 ### Database
 
 #### Frontend (Astro DB/Turso)
 ```bash
-pnpm --filter frontend db:seed                    # seed Astro DB
-ASTRO_DB_REMOTE_URL="..." ASTRO_DB_APP_TOKEN="..." pnpm astro db push  # push schema to Turso
+bun --filter frontend db:seed                    # seed Astro DB
+ASTRO_DB_REMOTE_URL="..." ASTRO_DB_APP_TOKEN="..." bun astro db push  # push schema to Turso
 ```
 
 #### Backend (Prisma)
 ```bash
-pnpm --filter backend db:push      # push schema
-pnpm --filter backend db:generate  # generate client
-pnpm --filter backend db:seed      # seed data
+bun --filter backend db:push      # push schema
+bun --filter backend db:generate  # generate client
+bun --filter backend db:seed      # seed data
 ```
 
 ### Lint/Format
 ```bash
-pnpm check              # lint + prettier check
-pnpm fix                # fix lint + prettier
+bun check              # lint + prettier check
+bun fix                # fix lint + prettier
 ```
 
 ### Test
 ```bash
-pnpm test               # runs all tests
-pnpm --filter frontend test:unit   # vitest
-pnpm --filter frontend test:e2e    # playwright
+bun test               # runs all tests
+bun --filter frontend test:unit   # vitest
+bun --filter frontend test:e2e    # playwright
 ```
 
 ## Deployment (Fly.io)

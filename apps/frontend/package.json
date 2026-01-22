@@ -6,14 +6,16 @@
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build --remote",
-    "db:seed": "pnpm astro db execute db/seed.ts --remote",
+    "db:seed": "bun astro db execute db/seed.ts --remote",
     "dev": "astro dev",
+    "format": "prettier -w .",
+    "format:check": "prettier --check .",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --fix",
     "preview": "astro preview",
     "start": "astro dev",
-    "test": "concurrently \"pnpm:test:*(!fix)\" --names \"test:\"",
-    "test:e2e": "pnpm exec playwright test",
+    "test": "concurrently \"bun:test:*(!fix)\" --names \"test:\"",
+    "test:e2e": "bun x playwright test",
     "test:unit": "vitest"
   },
   "dependencies": {
@@ -63,7 +65,8 @@
     "vitest": "^4.0.1"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.0.0",
+    "bun": ">=1.0.0"
   },
-  "packageManager": "pnpm@10.19.0"
+  "packageManager": "bun@1.1.44"
 }
