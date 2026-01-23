@@ -25,7 +25,7 @@ WORKDIR /app
 COPY bun.lock bunfig.toml package.json ./
 # Copy frontend app package.json
 COPY apps/frontend/package.json ./apps/frontend/package.json
-RUN bun install --production --frozen-lockfile --filter frontend
+RUN bun install --production --frozen-lockfile --ignore-scripts --filter frontend
 WORKDIR /app/apps/frontend
 COPY --from=build /app/apps/frontend/dist ./dist
 
