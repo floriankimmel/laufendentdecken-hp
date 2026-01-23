@@ -33,7 +33,7 @@ describe('FullPlayButton', () => {
 
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
-    expect(screen.getByText('Play Episode')).toBeInTheDocument();
+    expect(screen.getByText('Episode abspielen')).toBeInTheDocument();
   });
 
   it('renders pause button when playing current episode', () => {
@@ -42,7 +42,7 @@ describe('FullPlayButton', () => {
 
     render(<FullPlayButton episode={mockEpisode} />);
 
-    expect(screen.getByText('Pause Episode')).toBeInTheDocument();
+    expect(screen.getByText('Episode pausieren')).toBeInTheDocument();
   });
 
   it('starts playing when clicked on a new episode', () => {
@@ -106,7 +106,7 @@ describe('FullPlayButton', () => {
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
-    const srOnly = screen.getByText('(press to play)');
+    const srOnly = screen.getByText('(zum Abspielen drücken)');
     expect(srOnly).toBeInTheDocument();
     expect(srOnly).toHaveClass('sr-only');
   });
@@ -122,7 +122,7 @@ describe('FullPlayButton', () => {
 
     render(<FullPlayButton episode={mockEpisode} />);
 
-    const srOnly = screen.getByText('(press to pause)');
+    const srOnly = screen.getByText('(zum Pausieren drücken)');
     expect(srOnly).toBeInTheDocument();
     expect(srOnly).toHaveClass('sr-only');
   });

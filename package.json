@@ -14,7 +14,7 @@
     "fix": "bun fix:lint && bun fix:prettier",
     "fix:lint": "bun --filter frontend lint:fix",
     "fix:prettier": "bun --filter frontend format",
-    "prepare": "cd apps/frontend && simple-git-hooks"
+    "prepare": "cd apps/frontend && bunx simple-git-hooks"
   },
   "engines": {
     "node": ">=22.0.0",

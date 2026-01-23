@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test';
 
 const indexMeta = {
-  title: 'Whiskey Web and Whatnot: Web Development, Neat',
+  title: 'Laufend Entdecken Podcast - Der österreichische Laufpodcast',
   description:
-    /^Veteran web developers RobbieTheWagner, Charles William Carpenter III, and Adam Argyle host this informal, whiskey-fueled fireside chat with your favorite web devs. They discuss all things web development including JavaScript, TypeScript, EmberJS, React, Astro, SolidJS, CSS, HTML, Web3, and more. They take a unique approach and focus on getting to know the human side of developers and their hobbies outside of work, all while sampling a new whiskey that they rate on their unique tentacle scale./,
-  image:
-    'https://play.cdnstream1.com/zjb/image/download/c7/ad/57/c7ad5763-26d4-49e8-9b51-37f448a8bad1_1400.jpg'
+    'Laufend Entdecken ist der österreichische Laufpodcast. Wir sprechen über Laufen, Training, Wettkämpfe und alles rund ums Thema Laufsport.',
+  imagePattern:
+    /^https:\/\/laufendentdecken-podcast\.at\/wp-content\/uploads\/.+\.jpeg$/
 };
 
 test('index page has correct meta', async ({ page }) => {
@@ -23,15 +23,15 @@ test('index page has correct meta', async ({ page }) => {
   await expect(description).toHaveAttribute('content', indexMeta.description);
 
   const ogImage = page.locator('meta[property="og:image"]');
-  await expect(ogImage).toHaveAttribute(
-    'content',
-    `/_image?href=${encodeURIComponent(indexMeta.image)}&w=640&q=75`
+  const ogImageContent = await ogImage.getAttribute('content');
+  expect(ogImageContent).toMatch(
+    /^\/_image\?href=https%3A%2F%2Flaufendentdecken-podcast\.at%2Fwp-content%2Fuploads%2F.+&w=640&h=640&q=75/
   );
 
   const twitterImage = page.locator('meta[name="twitter:image:src"]');
-  await expect(twitterImage).toHaveAttribute(
-    'content',
-    `/_image?href=${encodeURIComponent(indexMeta.image)}&w=640&q=75`
+  const twitterImageContent = await twitterImage.getAttribute('content');
+  expect(twitterImageContent).toMatch(
+    /^\/_image\?href=https%3A%2F%2Flaufendentdecken-podcast\.at%2Fwp-content%2Fuploads%2F.+&w=640&h=640&q=75/
   );
 
   const firstEpisodeThumbnail = page.locator(
@@ -39,6 +39,6 @@ test('index page has correct meta', async ({ page }) => {
   );
   await expect(firstEpisodeThumbnail).toHaveAttribute(
     'src',
-    RegExp('^/_image[?]href=.*w=160&q=75$')
+    RegExp('^/_image[?]href=.*w=160&h=160&q=75&f=avif$')
   );
 });

@@ -21,6 +21,25 @@ jobs:
       - run: bun install
       - run: bun run check
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+      - name: Run unit tests
+        run: bun --filter frontend test:unit
+      - name: Run e2e tests
+        run: bun --filter frontend test:e2e
+        env:
+          ASTRO_DB_REMOTE_URL: ${{ secrets.ASTRO_DB_REMOTE_URL }}
+          ASTRO_DB_APP_TOKEN: ${{ secrets.ASTRO_DB_APP_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
-    needs: [check, build]
+    needs: [check, test, build]
     steps:
       - uses: actions/checkout@v4
 
