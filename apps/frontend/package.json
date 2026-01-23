@@ -30,6 +30,7 @@
     "astro": "^5.15.0",
     "astro-seo-schema": "^5.1.0",
     "atropos": "^2.0.2",
+    "fast-xml-parser": "^5.3.3",
     "he": "^1.2.0",
     "html-to-text": "^9.0.5",
     "preact": "^10.27.2",

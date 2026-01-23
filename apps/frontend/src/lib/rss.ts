@@ -1,6 +1,6 @@
 import { htmlToText } from 'html-to-text';
 import he from 'he';
-import parseFeed from 'rss-to-json';
+import { XMLParser } from 'fast-xml-parser';
 import { array, number, object, optional, parse, string } from 'valibot';
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
@@ -9,6 +9,49 @@ import { optimizeImage } from './optimize-episode-image';
 import { dasherize } from '../utils/dasherize';
 import { truncate } from '../utils/truncate';
 import starpodConfig from '../../starpod.config';
+
+// Helper to parse RSS feed using fetch + fast-xml-parser (Bun-compatible)
+async function parseFeedFromURL(url: string) {
+  const response = await fetch(url);
+  const xml = await response.text();
+
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: '@_',
+    textNodeName: '#text',
+    parseAttributeValue: true
+  });
+
+  const result = parser.parse(xml);
+  const channel = result.rss?.channel || result.feed;
+
+  // Convert to rss-to-json-like format
+  const items = (
+    Array.isArray(channel.item) ? channel.item : [channel.item]
+  ).map((item: any) => ({
+    id: item.guid?.['#text'] || item.guid || item.link,
+    title: item.title,
+    published: new Date(item.pubDate).getTime(),
+    description: item.description,
+    content_encoded: item['content:encoded'],
+    itunes_duration: item['itunes:duration'],
+    itunes_episode: item['itunes:episode'],
+    itunes_episodeType: item['itunes:episodeType'] || 'full',
+    itunes_image: item['itunes:image']
+      ? { href: item['itunes:image']?.['@_href'] }
+      : undefined,
+    enclosures: item.enclosure
+      ? (Array.isArray(item.enclosure) ? item.enclosure : [item.enclosure]).map(
+          (enc: any) => ({
+            url: enc['@_url'],
+            type: enc['@_type']
+          })
+        )
+      : []
+  }));
+
+  return { items };
+}
 
 const CACHE_DIR = join(process.cwd(), '.cache');
 const SHOW_CACHE_FILE = join(CACHE_DIR, 'show-info.json');
@@ -185,8 +228,7 @@ export async function getAllEpisodes(
     )
   });
 
-  // @ts-expect-error
-  let feed = (await parseFeed.parse(starpodConfig.rssFeed)) as Show;
+  let feed = await parseFeedFromURL(starpodConfig.rssFeed);
   let items = parse(FeedSchema, feed).items;
 
   let episodes: Array<Episode> = await Promise.all(
