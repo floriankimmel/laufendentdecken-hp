@@ -50,7 +50,18 @@ async function parseFeedFromURL(url: string) {
       : []
   }));
 
-  return { items };
+  return {
+    items,
+    channel: {
+      title: channel.title,
+      description: channel.description,
+      link: channel.link,
+      image: channel.image ? { url: channel.image?.url } : undefined,
+      'itunes:image': channel['itunes:image']
+        ? { '@_href': channel['itunes:image']?.['@_href'] }
+        : undefined
+    }
+  };
 }
 
 const CACHE_DIR = join(process.cwd(), '.cache');
@@ -124,8 +135,16 @@ export async function getShowInfo(skipCache = false): Promise<Show> {
   }
 
   // Fetch from RSS
-  // @ts-expect-error
-  const showInfo = (await parseFeed.parse(starpodConfig.rssFeed)) as Show;
+  const feed = await parseFeedFromURL(starpodConfig.rssFeed);
+  const showInfo = {
+    title: feed.channel?.title || '',
+    description: feed.channel?.description || '',
+    image:
+      feed.channel?.image?.url ||
+      feed.channel?.['itunes:image']?.['@_href'] ||
+      '',
+    link: feed.channel?.link || starpodConfig.rssFeed
+  } as Show;
   showInfo.image = (await optimizeImage(showInfo.image, {
     height: 640,
     width: 640
