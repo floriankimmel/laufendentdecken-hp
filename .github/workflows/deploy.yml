@@ -35,7 +35,7 @@ jobs:
       - name: Run unit tests
         run: bun --filter frontend test:unit
       - name: Run e2e tests
-        run: bun --filter frontend test:e2e
+        run: bun --filter frontend test:e2e -- --project=chromium
         env:
           ASTRO_DB_REMOTE_URL: ${{ secrets.ASTRO_DB_REMOTE_URL }}
           ASTRO_DB_APP_TOKEN: ${{ secrets.ASTRO_DB_APP_TOKEN }}
