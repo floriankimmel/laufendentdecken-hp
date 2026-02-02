@@ -1,5 +1,4 @@
 ---
-import { Font } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 import { Schema } from 'astro-seo-schema';
 
@@ -93,7 +92,13 @@ const description = Astro.props.description ?? starpodConfig.description;
 
     <link rel="preload" as="image" href={show.image} />
 
-    <Font cssVariable="--astro-font-inter" preload />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap"
+      rel="stylesheet"
+    />
 
     <Schema
       slot="head"
