@@ -31,7 +31,7 @@ jobs:
           bun-version: latest
       - run: bun install
       - name: Install Playwright browsers
-        run: bunx playwright install --with-deps chromium
+        run: bun --filter frontend exec playwright install --with-deps chromium
       - name: Run unit tests
         run: bun --filter frontend test:unit
       - name: Run e2e tests
